@@ -1,0 +1,20 @@
+{
+    "name": "emonkak/random.php",
+    "description": "A random number generater",
+    "authors": [
+        {
+            "name": "Shota Nozaki",
+            "email": "emonkak@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "version": "0.0.0",
+    "require": {
+      "php": ">=5.0.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Random": "src/"
+        }
+    }
+}
