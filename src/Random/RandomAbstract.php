@@ -70,6 +70,8 @@ abstract class RandomAbstract
     }
 
     /**
+     * Shuffle array values.
+     *
      * @param   array  $xs
      * @return  array
      */
@@ -85,6 +87,30 @@ abstract class RandomAbstract
         }
 
         return $xs;
+    }
+
+    /**
+     * Sammple a array value from index.
+     *
+     * @param   array  $xs
+     * @return  array
+     */
+    final public function sample($xs)
+    {
+        $i = $this->range(0, count($xs));
+        return isset($xs[$i]) ? $xs[$i] : null;
+    }
+
+    /**
+     * Sammple a array value from key.
+     *
+     * @param   array  $xs
+     * @return  array
+     */
+    final public function sampleKey($xs)
+    {
+        $k = $this->sample(array_keys($xs));
+        return isset($xs[$k]) ? $xs[$k] : null;
     }
 
     /**
