@@ -1,16 +1,22 @@
 {
     "name": "emonkak/random.php",
-    "description": "A random number generater",
+    "description": "A random number generator",
+    "version": "0.0.0",
+    "type": "library",
+    "keywords": ["random"],
+    "homepage": "https://github.com/emonkak/random.php",
+    "license": "MIT",
     "authors": [
         {
             "name": "Shota Nozaki",
             "email": "emonkak@gmail.com"
         }
     ],
-    "license": "MIT",
-    "version": "0.0.0",
     "require": {
       "php": ">=5.0.0"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": {
