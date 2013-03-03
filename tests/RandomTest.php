@@ -7,7 +7,7 @@ use Random\XorShift;
 class RandomTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider provider
+     * @dataProvider seedProvider
      */
     public function testGenerateWithMersenneTwister($seed)
     {
@@ -20,7 +20,7 @@ class RandomTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider provider
+     * @dataProvider seedProvider
      */
     public function testGenerateWithMersenneTwisterNative($seed)
     {
@@ -33,7 +33,7 @@ class RandomTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider provider
+     * @dataProvider seedProvider
      */
     public function testRangeWithMersenneTwister($seed)
     {
@@ -53,27 +53,39 @@ class RandomTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testWithoutInitialSeed()
+    /**
+     * @dataProvider generatorProvider
+     */
+    public function testWithoutInitialSeed($generator)
     {
-        $random = new MersenneTwister();
-
+        $r1 = new $generator();
         $xs = array();
         for ($i = 0; $i < 100; $i++) {
-            $xs[] = $random->generate();
+            $xs[] = $r1->generate();
         }
 
+        $r2 = new $generator();
         $ys = array();
         for ($i = 0; $i < 100; $i++) {
-            $ys[] = $random->generate();
+            $ys[] = $r2->generate();
         }
 
         $this->assertNotEquals($xs, $ys);
     }
 
-    public function provider()
+    public function seedProvider()
     {
         return array_map(function($xs) { return array($xs); },
                          range(-50, 50));
+    }
+
+    public function generatorProvider()
+    {
+        return array(
+            array('Random\\MersenneTwister'),
+            array('Random\\MersenneTwisterNative'),
+            array('Random\\XorShift'),
+        );
     }
 }
 
