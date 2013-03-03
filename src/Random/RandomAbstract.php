@@ -10,6 +10,7 @@ abstract class RandomAbstract
     public function __construct($seed = null)
     {
         if ($seed === null) {
+            // It is the default seed generation algorithm of PHP.
             $seed = (time() * getmypid()) ^ (1000000.0 * lcg_value());
         }
 
@@ -26,14 +27,14 @@ abstract class RandomAbstract
 
     /**
      * Generate the random number.
-     * The generated number depends on the implementation.
+     * This generated number depends on the implementation.
      *
      * @return  int
      */
     abstract public function generate();
 
     /**
-     * Returns the minimum number that will be generated.
+     * Return the minimum number that will be generated.
      *
      * @return  int
      */
@@ -43,14 +44,14 @@ abstract class RandomAbstract
     }
 
     /**
-     * Returns the maximum number that will be generated.
+     * Return the maximum number that will be generated.
      *
      * @return  int
      */
     abstract public function maximum();
 
     /**
-     * Return 0.0 to 1.0 a random number.
+     * Return a random number of between 0.0 and 1.0.
      *
      * @return  float
      */
@@ -60,6 +61,8 @@ abstract class RandomAbstract
     }
 
     /**
+     * Return a random number of between a start number and an end number.
+     *
      * @param   int  $min
      * @param   int  $max
      * @return  int
@@ -70,7 +73,7 @@ abstract class RandomAbstract
     }
 
     /**
-     * Shuffle array values.
+     * Shuffle an array.
      *
      * @param   array  $xs
      * @return  array
@@ -90,10 +93,10 @@ abstract class RandomAbstract
     }
 
     /**
-     * Sammple a array value from index.
+     * Sample a array value by indices.
      *
-     * @param   array  $xs
-     * @return  array
+     * @param   array       $xs
+     * @return  mixed|null
      */
     final public function sample($xs)
     {
@@ -102,19 +105,19 @@ abstract class RandomAbstract
     }
 
     /**
-     * Sammple a array value from key.
+     * Sample a array value by keys.
      *
-     * @param   array  $xs
-     * @return  array
+     * @param   array       $xs
+     * @return  mixed|null
      */
-    final public function sampleKey($xs)
+    final public function sampleByKey($xs)
     {
         $k = $this->sample(array_keys($xs));
         return isset($xs[$k]) ? $xs[$k] : null;
     }
 
     /**
-     * Samples from a uniform distribution.
+     * Sample from a uniform distribution.
      *
      * @param   float  $min
      * @param   float  $max
@@ -126,7 +129,7 @@ abstract class RandomAbstract
     }
 
     /**
-     * Samples from a exponential distribution.
+     * Sample from a exponential distribution.
      *
      * @param   float  $lambda
      * @return  float
@@ -152,7 +155,7 @@ abstract class RandomAbstract
     }
 
     /**
-     * Samples from a bernoulli distribution.
+     * Sample from a bernoulli distribution.
      *
      * @param   float  $probability
      * @return  int
@@ -163,7 +166,7 @@ abstract class RandomAbstract
     }
 
     /**
-     * Samples from a binomial distribution.
+     * Sample from a binomial distribution.
      *
      * @param   int    $n
      * @param   float  $probability
@@ -177,7 +180,7 @@ abstract class RandomAbstract
     }
 
     /**
-     * Samples from a poisson distribution.
+     * Sample from a poisson distribution.
      *
      * @param   float  $lambda
      * @return  float
