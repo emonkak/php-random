@@ -44,6 +44,6 @@ $r3->range(0, 100);  // is between 0 and 100
 - `float uniform(float $min, float $max)`
 - `float exponential(float $lambda)`
 - `float normal(float $mean, float $sigma)`
-- `float bernoulli(float $probability)`
-- `float binomial(int $n, float $probability)`
+- `int bernoulli(float $probability)`
+- `int binomial(int $n, float $probability)`
 - `float poisson(float $lambda)`
