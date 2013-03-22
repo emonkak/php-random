@@ -2,7 +2,7 @@
 
 namespace Random;
 
-abstract class RandomAbstract
+abstract class AbstractRandom
 {
     /**
      * @param  int  Initial seed

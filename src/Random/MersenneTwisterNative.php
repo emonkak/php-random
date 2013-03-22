@@ -2,7 +2,7 @@
 
 namespace Random;
 
-class MersenneTwisterNative extends RandomAbstract
+class MersenneTwisterNative extends AbstractRandom
 {
     public function __destruct()
     {

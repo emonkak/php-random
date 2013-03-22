@@ -2,7 +2,7 @@
 
 namespace Random;
 
-class XorShift extends RandomAbstract
+class XorShift extends AbstractRandom
 {
     private $x = 123456789;
     private $y = 362436069;
@@ -28,8 +28,7 @@ class XorShift extends RandomAbstract
         $this->x = $this->y;
         $this->y = $this->z;
         $this->z = $this->w;
-        $this->w = ($this->w ^ ($this->w >> 19) ^ ($t ^ ($t >> 8)))
-                 & 0xffffffff;
+        $this->w = ($this->w ^ ($this->w >> 19) ^ ($t ^ ($t >> 8))) & 0xffffffff;
         return $this->w;
     }
 }

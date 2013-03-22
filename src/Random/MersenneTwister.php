@@ -2,7 +2,7 @@
 
 namespace Random;
 
-class MersenneTwister extends RandomAbstract
+class MersenneTwister extends AbstractRandom
 {
     const N = 624;
     const M = 397;
@@ -24,8 +24,7 @@ class MersenneTwister extends RandomAbstract
 
         for ($i = 1; $i < self::N; $i++) {
             $r = $this->state[$i - 1];
-            $this->state[$i] = (1812433253 * ($r ^ ($r >> 30)) + $i)
-                             & 0xffffffff;
+            $this->state[$i] = (1812433253 * ($r ^ ($r >> 30)) + $i) & 0xffffffff;
         }
     }
 
