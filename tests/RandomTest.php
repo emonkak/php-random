@@ -1,7 +1,7 @@
 <?php
 
 use Random\MersenneTwister;
-use Random\MersenneTwisterNative;
+use Random\NativeMersenneTwister;
 use Random\XorShift;
 
 class RandomTest extends PHPUnit_Framework_TestCase
@@ -22,10 +22,10 @@ class RandomTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider seedProvider
      */
-    public function testGenerateWithMersenneTwisterNative($seed)
+    public function testGenerateWithNativeMersenneTwister($seed)
     {
         $random1 = new MersenneTwister($seed);
-        $random2 = new MersenneTwisterNative($seed);
+        $random2 = new NativeMersenneTwister($seed);
 
         for ($i = 0; $i < 1000; $i++) {
             $this->assertEquals($random1->generate(), $random2->generate());
@@ -83,7 +83,7 @@ class RandomTest extends PHPUnit_Framework_TestCase
     {
         return array(
             array('Random\\MersenneTwister'),
-            array('Random\\MersenneTwisterNative'),
+            array('Random\\NativeMersenneTwister'),
             array('Random\\XorShift'),
         );
     }
