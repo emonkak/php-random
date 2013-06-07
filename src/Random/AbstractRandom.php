@@ -150,7 +150,7 @@ abstract class AbstractRandom
     {
         $r1 = $this->random();
         $r2 = $this->random();
-        while ($r1 == 0) $r = $this->random();
+        while ($r1 == 0) $r1 = $this->random();
         return $sigma * sqrt(-2 * log($r1)) * sin(2 * M_PI * $r2) + $mean;
     }
 
