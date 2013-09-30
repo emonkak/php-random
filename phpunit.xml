@@ -7,4 +7,20 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true">
+  <php>
+    <ini name="date_default_timezone_set" value="Asia/Tokyo" />
+    <ini name="memory_limit" value="128M" />
+  </php>
+
+  <testsuites>
+    <testsuite>
+      <directory>./tests/</directory>
+    </testsuite>
+  </testsuites>
+
+  <filter>
+    <whitelist>
+      <directory suffix=".php">./src/Random/</directory>
+    </whitelist>
+  </filter>
 </phpunit>

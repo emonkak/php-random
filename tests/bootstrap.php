@@ -1,5 +1,7 @@
 <?php
 
-ini_set('memory_limit', '128M');
-
 require(__DIR__ . '/../vendor/autoload.php');
+
+$loader = new Composer\Autoload\ClassLoader();
+$loader->add('Random\\', __DIR__ . '/Random');
+$loader->register();
