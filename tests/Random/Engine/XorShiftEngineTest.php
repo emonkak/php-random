@@ -11,29 +11,22 @@ namespace Random\Engine;
 
 class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
 {
-    const SUPPLY_OF_SEED = 128;
+    const SUPPLY_OF_SEED = 8;
 
     const NUMBER_OF_TRIALS = 128;
 
-    public function testCanReset()
+    public function testMax()
     {
         $engine = new XorShift128Engine();
 
-        $this->assertTrue($engine->canReset());
+        $this->assertSame(0xffffffff, $engine->max());
     }
 
-    public function testMaximum()
+    public function testMin()
     {
         $engine = new XorShift128Engine();
 
-        $this->assertSame(0xffffffff, $engine->maximum());
-    }
-
-    public function testMinimum()
-    {
-        $engine = new XorShift128Engine();
-
-        $this->assertSame(0, $engine->minimum());
+        $this->assertSame(0, $engine->min());
     }
 
     /**
@@ -46,8 +39,8 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
         for ($i = self::NUMBER_OF_TRIALS; $i--;) {
             $n = $engine->next();
 
-            $this->assertGreaterThanOrEqual($engine->minimum(), $n);
-            $this->assertLessThanOrEqual($engine->maximum(), $n);
+            $this->assertGreaterThanOrEqual($engine->min(), $n);
+            $this->assertLessThanOrEqual($engine->max(), $n);
         }
     }
 
@@ -63,22 +56,6 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
 
             $this->assertGreaterThanOrEqual(0.0, $n);
             $this->assertLessThan(1.0, $n);
-        }
-    }
-
-    public function testReset()
-    {
-        $engine = new XorShift128Engine(12345);
-
-        $xs = [];
-        for ($i = self::NUMBER_OF_TRIALS; $i--;) {
-            $xs[$i] = $engine->next();
-        }
-
-        $engine->reset();
-
-        for ($i = self::NUMBER_OF_TRIALS; $i--;) {
-            $this->assertSame($xs[$i], $engine->next());
         }
     }
 

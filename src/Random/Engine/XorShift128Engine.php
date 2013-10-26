@@ -9,13 +9,8 @@
 
 namespace Random\Engine;
 
-class XorShift128Engine extends Engine
+class XorShift128Engine extends AbstractEngine
 {
-    const SEED_X = 123456789;
-    const SEED_Y = 362436069;
-    const SEED_Z = 521288629;
-    const SEED_W = 88675123;
-
     /**
      * @var integer
      */
@@ -37,34 +32,23 @@ class XorShift128Engine extends Engine
     private $w;
 
     /**
-     * @var integer
+     * @param integer $x
+     * @param integer $y
+     * @param integer $z
+     * @param integer $w
      */
-    private $seed;
-
-    /**
-     * @param integer|null Initial seed
-     */
-    public function __construct($seed = null)
+    public function __construct($x = 123456789, $y = 362436069, $z = 521288629, $w = 88675123)
     {
-        $this->seed = $seed === null
-                    ? ((time() * getmypid()) ^ (1000000.0 * lcg_value()))
-                    : $seed;
-
-        $this->reset();
+        $this->x = $x;
+        $this->y = $y;
+        $this->z = $z;
+        $this->w = $w;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function canReset()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function maximum()
+    public function max()
     {
         return 0xffffffff;
     }
@@ -72,7 +56,7 @@ class XorShift128Engine extends Engine
     /**
      * {@inheritdoc}
      */
-    public function minimum()
+    public function min()
     {
         return 0;
     }
@@ -91,18 +75,4 @@ class XorShift128Engine extends Engine
 
         return $this->w;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function reset()
-    {
-        $this->x = self::SEED_X ^  $this->seed                              & 0xffffffff;
-        $this->y = self::SEED_Y ^ ($this->seed <<  8) | ($this->seed >> 24) & 0xffffffff;
-        $this->z = self::SEED_Z ^ ($this->seed << 16) | ($this->seed >> 16) & 0xffffffff;
-        $this->w = self::SEED_W ^ ($this->seed << 24) | ($this->seed >>  8) & 0xffffffff;
-    }
 }
-
-// __END__
-// vim: expandtab softtabstop=4 shiftwidth=4

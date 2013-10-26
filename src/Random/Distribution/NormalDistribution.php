@@ -9,9 +9,9 @@
 
 namespace Random\Distribution;
 
-use Random\Engine\Engine;
+use Random\Engine\AbstractEngine;
 
-class NormalDistribution extends Distribution
+class NormalDistribution extends AbstractDistribution
 {
     /**
      * @var float
@@ -22,6 +22,11 @@ class NormalDistribution extends Distribution
      * @var float
      */
     private $sigma;
+
+    /**
+     * @var float
+     */
+    private $next;
 
     /**
      * @param float $mean
@@ -36,15 +41,24 @@ class NormalDistribution extends Distribution
     /**
      * {@inheritdoc}
      */
-    public function generate(Engine $engine)
+    public function generate(AbstractEngine $engine)
     {
-        $r1 = $engine->nextDouble();
-        $r2 = $engine->nextDouble();
+        if ($this->next === null) {
+            do {
+                $x = 2.0 * $engine->nextDouble() - 1.0;
+                $y = 2.0 * $engine->nextDouble() - 1.0;
+                $r2 = $x * $x + $y * $y;
+            } while ($r2 > 1.0 || $r2 == 0.0);
 
-        while ($r1 == 0) {
-            $r1 = $engine->nextDouble();
+            $m = sqrt(-2 * log($r2) / $r2);
+
+            $this->next = $x * $m;
+            $result = $y * $m;
+        } else {
+            $result = $this->next;
+            $this->next = null;
         }
 
-        return $this->sigma * sqrt(-2 * log($r1)) * sin(2 * M_PI * $r2) + $this->mean;
+        return $result * $this->sigma + $this->mean;
     }
 }

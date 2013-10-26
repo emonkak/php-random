@@ -9,17 +9,17 @@
 
 namespace Random\Distribution;
 
-use Random\Engine\Engine;
+use Random\Engine\AbstractEngine;
 
 class DistributionIterator implements \Iterator
 {
     /**
-     * @var Engine
+     * @var AbstractEngine
      */
     private $engine;
 
     /**
-     * @var Distribution
+     * @var AbstractDistribution
      */
     private $distribution;
 
@@ -34,17 +34,17 @@ class DistributionIterator implements \Iterator
     private $tick;
 
     /**
-     * @param Engine       $engine
-     * @param Distribution $distribution
+     * @param AbstractEngine      $engine
+     * @param AbstractDistribution $distribution
      */
-    public function __construct(Engine $engine, Distribution $distribution)
+    public function __construct(AbstractEngine $engine, AbstractDistribution $distribution)
     {
         $this->engine = $engine;
         $this->distribution = $distribution;
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return integer
      */
     public function current()
@@ -53,7 +53,7 @@ class DistributionIterator implements \Iterator
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return integer
      */
     public function key()
@@ -62,7 +62,7 @@ class DistributionIterator implements \Iterator
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return void
      */
     public function next()
@@ -72,24 +72,17 @@ class DistributionIterator implements \Iterator
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return void
      */
     public function rewind()
     {
-        if ($this->tick !== null) {
-            if (!$this->engine->canReset()) {
-                throw new \LogicException('Cannot rewind ' . get_class($this->engine) . ' class.');
-            }
-
-            $this->engine->reset();
-        }
-
+        $this->current = $this->distribution->generate($this->engine);
         $this->tick = 0;
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return boolean
      */
     public function valid()

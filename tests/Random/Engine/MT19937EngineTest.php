@@ -13,29 +13,20 @@ use Random\Distribution\UniformIntDistribution;
 
 class MT19937EngineTest extends \PHPUnit_Framework_TestCase
 {
-    const SUPPLY_OF_SEED = 16;
+    const SUPPLY_OF_SEED = 8;
 
-    const NUMBER_OF_TRIALS = 1024;
-
-    public function testCanReset()
+    public function testMax()
     {
         $engine = new MT19937Engine();
 
-        $this->assertTrue($engine->canReset());
+        $this->assertSame(mt_getrandmax(), $engine->max());
     }
 
-    public function testMaximum()
+    public function testMin()
     {
         $engine = new MT19937Engine();
 
-        $this->assertSame(mt_getrandmax(), $engine->maximum());
-    }
-
-    public function testMinimum()
-    {
-        $engine = new MT19937Engine();
-
-        $this->assertSame(0, $engine->minimum());
+        $this->assertSame(0, $engine->min());
     }
 
     /**
@@ -47,7 +38,7 @@ class MT19937EngineTest extends \PHPUnit_Framework_TestCase
 
         mt_srand($seed);
 
-        for ($i = self::NUMBER_OF_TRIALS; $i--;) {
+        for ($i = MT19937Engine::N + 1; $i--;) {
             $this->assertSame(mt_rand(), $engine->next());
         }
     }
@@ -59,27 +50,11 @@ class MT19937EngineTest extends \PHPUnit_Framework_TestCase
     {
         $engine = new MT19937Engine($seed);
 
-        for ($i = self::NUMBER_OF_TRIALS; $i--;) {
+        for ($i = MT19937Engine::N + 1; $i--;) {
             $n = $engine->nextDouble();
 
             $this->assertGreaterThanOrEqual(0.0, $n);
             $this->assertLessThan(1.0, $n);
-        }
-    }
-
-    public function testReset()
-    {
-        $engine = new MT19937Engine(12345);
-
-        $xs = [];
-        for ($i = self::NUMBER_OF_TRIALS; $i--;) {
-            $xs[$i] = $engine->next();
-        }
-
-        $engine->reset();
-
-        for ($i = self::NUMBER_OF_TRIALS; $i--;) {
-            $this->assertSame($xs[$i], $engine->next());
         }
     }
 
@@ -93,7 +68,7 @@ class MT19937EngineTest extends \PHPUnit_Framework_TestCase
 
         mt_srand($seed);
 
-        for ($i = 0; $i < self::NUMBER_OF_TRIALS; $i++) {
+        for ($i = MT19937Engine::N + 1; $i--;) {
             $this->assertSame(mt_rand(0, 1234), $distribution->generate($engine));
         }
     }

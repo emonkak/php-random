@@ -12,7 +12,7 @@ namespace Random\Engine;
 class EngineIterator implements \Iterator
 {
     /**
-     * @var RandomEngine
+     * @var AbstractEngine
      */
     private $engine;
 
@@ -27,15 +27,15 @@ class EngineIterator implements \Iterator
     private $tick;
 
     /**
-     * @param Engine $engine
+     * @param AbstractEngine $engine
      */
-    public function __construct(Engine $engine)
+    public function __construct(AbstractEngine $engine)
     {
         $this->engine = $engine;
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return integer
      */
     public function current()
@@ -44,7 +44,7 @@ class EngineIterator implements \Iterator
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return integer
      */
     public function key()
@@ -53,7 +53,7 @@ class EngineIterator implements \Iterator
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return void
      */
     public function next()
@@ -63,24 +63,17 @@ class EngineIterator implements \Iterator
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return void
      */
     public function rewind()
     {
-        if ($this->tick !== null) {
-            if (!$this->engine->canReset()) {
-                throw new \LogicException('Cannot rewind the ' . get_class($this->engine) . ' class.');
-            }
-
-            $this->engine->reset();
-        }
-
+        $this->current = $this->engine->next();
         $this->tick = 0;
     }
 
     /**
-     * @see    \Iterator
+     * @see \Iterator
      * @return boolean
      */
     public function valid()

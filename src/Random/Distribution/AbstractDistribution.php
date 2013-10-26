@@ -9,21 +9,21 @@
 
 namespace Random\Distribution;
 
-use Random\Engine\Engine;
+use Random\Engine\AbstractEngine;
 
-abstract class Distribution
+abstract class AbstractDistribution
 {
     /**
-     * @param  Engine $engine
+     * @param AbstractEngine $engine
      * @return float
      */
-    abstract public function generate(Engine $engine);
+    abstract public function generate(AbstractEngine $engine);
 
     /**
-     * @param  Engine $engine
+     * @param AbstractEngine $engine
      * @return \Iterator
      */
-    public function iterate(Engine $engine)
+    public function iterate(AbstractEngine $engine)
     {
         return new DistributionIterator($engine, $this);
     }

@@ -11,18 +11,25 @@ namespace Random\Distribution;
 
 use Random\Engine\AbstractEngine;
 
-class BernoulliDistribution extends AbstractDistribution
+class BinomialDistribution extends AbstractDistribution
 {
+    /**
+     * @var integer
+     */
+    private $n;
+
     /**
      * @var float
      */
     private $probability;
 
     /**
-     * @param interger $probability
+     * @param integer $n
+     * @param float $probability
      */
-    public function __construct($probability)
+    public function __construct($n, $probability)
     {
+        $this->n = $n;
         $this->probability = $probability;
     }
 
@@ -31,10 +38,14 @@ class BernoulliDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        if ($engine->nextDouble() < $this->probability) {
-            return true;
-        } else {
-            return false;
+        $count = 0;
+
+        for ($i = $this->n; $i > 0; $i--) {
+            if ($engine->nextDouble() <= $this->probability) {
+                $count++;
+            }
         }
+
+        return $count;
     }
 }

@@ -9,9 +9,9 @@
 
 namespace Random\Distribution;
 
-use Random\Engine\Engine;
+use Random\Engine\AbstractEngine;
 
-class UniformIntDistribution extends Distribution
+class UniformIntDistribution extends AbstractDistribution
 {
     /**
      * @var integer
@@ -36,7 +36,7 @@ class UniformIntDistribution extends Distribution
     /**
      * {@inheritdoc}
      */
-    public function generate(Engine $engine)
+    public function generate(AbstractEngine $engine)
     {
         return (int) floor($this->min + ($this->max - $this->min + 1.0)
                                       * $engine->nextDouble());

@@ -9,15 +9,10 @@
 
 namespace Random\Engine;
 
-abstract class Engine implements \IteratorAggregate
+abstract class AbstractEngine implements \IteratorAggregate
 {
     /**
-     * @return boolean
-     */
-    abstract public function canReset();
-
-    /**
-     * @see    \IteratorAggregate
+     * @see \IteratorAggregate
      * @return \Iterator
      */
     public function getIterator()
@@ -30,14 +25,14 @@ abstract class Engine implements \IteratorAggregate
      *
      * @return integer
      */
-    abstract public function maximum();
+    abstract public function max();
 
     /**
      * Returns the minimum number that will be generated.
      *
      * @return integer
      */
-    abstract public function minimum();
+    abstract public function min();
 
     /**
      * Returns a random number.
@@ -53,13 +48,6 @@ abstract class Engine implements \IteratorAggregate
      */
     public function nextDouble()
     {
-        return $this->next() / ($this->maximum() - $this->minimum() + 1.0);
+        return $this->next() / ($this->max() - $this->min() + 1.0);
     }
-
-    /**
-     * Initialize the state of the random number generator.
-     *
-     * @return void
-     */
-    abstract public function reset();
 }

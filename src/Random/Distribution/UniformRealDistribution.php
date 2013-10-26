@@ -9,7 +9,9 @@
 
 namespace Random\Distribution;
 
-class UniformRealDistribution extends Distribution
+use Random\Engine\AbstractEngine;
+
+class UniformRealDistribution extends AbstractDistribution
 {
     /**
      * @var float
@@ -34,7 +36,7 @@ class UniformRealDistribution extends Distribution
     /**
      * {@inheritdoc}
      */
-    public function generate(Engine $engine)
+    public function generate(AbstractEngine $engine)
     {
         return $this->min + ($this->max - $this->min) * $engine->nextDouble();
     }
