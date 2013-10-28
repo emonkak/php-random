@@ -117,7 +117,7 @@ class MT19937Engine extends AbstractEngine
     }
 
     /**
-     * @return void
+     * @return integer
      */
     private function twist($m, $u, $v)
     {
