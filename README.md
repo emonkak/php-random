@@ -16,7 +16,7 @@ It provides pseudo-random number Generators and random number distributions.
 
 MIT Licence
 
-## Examples
+## Example
 
 ```php
 use Random\Engine\MT19937Engine;
@@ -26,7 +26,7 @@ $seed = 100;  // Initial seed
 $engine = new MT19937Engine($seed);  // Mersenne Twister engine
 $distribution = new NormalDistribution(0, 1);  // Standard normal distribution
 
-$distribution->generate();  // Generate a random number with normal distribution
+$distribution->generate($engine);  // Generate a random number with normal distribution
 ```
 
 ## Engine
