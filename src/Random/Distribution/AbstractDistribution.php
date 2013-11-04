@@ -15,7 +15,7 @@ abstract class AbstractDistribution
 {
     /**
      * @param AbstractEngine $engine
-     * @return float
+     * @return mixed
      */
     abstract public function generate(AbstractEngine $engine);
 
