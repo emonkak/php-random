@@ -13,15 +13,15 @@ class DircreteDistributionTest extends DistributionTestCase
 {
     public function testGenerateEqually()
     {
-        $probabilities = [
+        $probabilities = array(
             1 => 25,
             2 => 25,
             3 => 25,
             4 => 25,
-        ];
+        );
         $distribution = new DiscreteDistribution($probabilities);
 
-        $seenIndexes = [];
+        $seenIndexes = array();
         $avaliableKeys = array_keys($probabilities);
 
         for ($i = 0; $i < 100; $i++) {
@@ -35,12 +35,12 @@ class DircreteDistributionTest extends DistributionTestCase
 
     public function testGenerateInequally()
     {
-        $probabilities = [
+        $probabilities = array(
             1 => 100,
             2 => 0,
             3 => 0,
             4 => 0,
-        ];
+        );
         $distribution = new DiscreteDistribution($probabilities);
 
         for ($i = 0; $i < 100; $i++) {
@@ -53,7 +53,7 @@ class DircreteDistributionTest extends DistributionTestCase
      */
     public function testGenerateWhenEmpty()
     {
-        $distribution = new DiscreteDistribution([]);
+        $distribution = new DiscreteDistribution(array());
 
         $this->assertNull($distribution->generate($this->engine));
     }

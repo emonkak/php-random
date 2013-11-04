@@ -61,7 +61,7 @@ class ShuffleOrderEngineTest extends \PHPUnit_Framework_TestCase
         $engine = new ShuffleOrderEngine($this->engine, 4);
 
         for ($i = 0; $i < 4; $i++) {
-            $this->assertContains($engine->next(), [1, 2, 3, 4]);
+            $this->assertContains($engine->next(), array(1, 2, 3, 4));
         }
     }
 
