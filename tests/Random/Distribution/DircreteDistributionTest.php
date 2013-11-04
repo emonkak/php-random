@@ -48,6 +48,9 @@ class DircreteDistributionTest extends DistributionTestCase
         }
     }
 
+    /**
+     * @expectedException LogicException
+     */
     public function testGenerateWhenEmpty()
     {
         $distribution = new DiscreteDistribution([]);

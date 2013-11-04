@@ -19,30 +19,32 @@ class DiscreteDistribution extends AbstractDistribution
     private $weights;
 
     /**
-     * @var integer
+     * @var UniformIntDistribution
      */
-    private $sum = 0;
+    private $uniform;
 
     /**
      * @param array $weights
      */
     public function __construct(array $weights)
     {
-        $this->weights = $weights;
+        $sum = 0;
 
         foreach ($weights as $weight) {
-            $this->sum += $weight;
+            $sum += $weight;
         }
+
+        $this->weights = $weights;
+        $this->uniform = new UniformIntDistribution(0, $sum);
     }
 
     /**
      * {@inheritdoc}
+     * @throws LogicException
      */
     public function generate(AbstractEngine $engine)
     {
-        $uniform = new UniformIntDistribution(0, $this->sum);
-
-        $result = $uniform->generate($engine);
+        $result = $this->uniform->generate($engine);
         $sum = 0;
 
         foreach ($this->weights as $key => $weight) {
@@ -53,6 +55,6 @@ class DiscreteDistribution extends AbstractDistribution
             }
         }
 
-        return null;
+        throw new \LogicException('Generating number is not possible.');
     }
 }
