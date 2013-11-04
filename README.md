@@ -41,8 +41,11 @@ $distribution->generate($engine);
 	// Also, the initial seed algorithm is full-compatible to the build-in `mt_srand()`
 	$engine = new MT19937Engine(/* $seed */);
 
+	// Reset the seed.
+	$engine->seed(1234);
+
 	// Get a next random number from the current generator state.
-	$number = $engine->next();
+	$number = $engine->next();  // as int
 	$number = $engine->nextDouble();  // as float
 
 	// Get the minimum and maximum number which generate a value by the engine.
@@ -60,9 +63,9 @@ $distribution->generate($engine);
 
 	```php
 	// If unspecified the seed, it is always specified the default seed value.
-	$engine = new XorShift128Engine(/* $x, $y, $z, $w */);
+	$engine = new XorShift128Engine(/* $seed */);
 
-	// See also {lhs} for other notes.
+	// See also `MT19937Engine`.
 	```
 
 ## Distribution

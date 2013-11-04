@@ -11,6 +11,11 @@ namespace Random\Engine;
 
 class XorShift128Engine extends AbstractEngine
 {
+    const X = 123456789;
+    const Y = 362436069;
+    const Z = 521288629;
+    const W = 88675123;
+
     /**
      * @var integer
      */
@@ -32,17 +37,18 @@ class XorShift128Engine extends AbstractEngine
     private $w;
 
     /**
-     * @param integer $x
-     * @param integer $y
-     * @param integer $z
-     * @param integer $w
+     * @param integer|null $seed
      */
-    public function __construct($x = 123456789, $y = 362436069, $z = 521288629, $w = 88675123)
+    public function __construct($seed = null)
     {
-        $this->x = $x;
-        $this->y = $y;
-        $this->z = $z;
-        $this->w = $w;
+        if ($seed !== null) {
+            $this->seed($seed);
+        } else {
+            $this->x = self::X;
+            $this->y = self::Y;
+            $this->z = self::Z;
+            $this->w = self::W;
+        }
     }
 
     /**
@@ -74,5 +80,17 @@ class XorShift128Engine extends AbstractEngine
         $this->w = ($this->w ^ ($this->w >> 19) ^ ($t ^ ($t >> 8))) & 0xffffffff;
 
         return $this->w;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function seed($seed)
+    {
+        // https://gist.github.com/gintenlabo/604721
+        $this->x = self::X ^  $seed                        & 0xffffffff;
+        $this->y = self::Y ^ ($seed << 17) | ($seed >> 15) & 0xffffffff;
+        $this->z = self::Z ^ ($seed << 31) | ($seed >>  1) & 0xffffffff;
+        $this->w = self::W ^ ($seed << 18) | ($seed >> 14) & 0xffffffff;
     }
 }

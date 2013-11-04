@@ -79,4 +79,12 @@ class ShuffleOrderEngine extends AbstractEngine
 
         return $this->y;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function seed($seed)
+    {
+        $this->engine->seed($seed);
+    }
 }

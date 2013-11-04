@@ -34,16 +34,12 @@ class MT19937Engine extends AbstractEngine
      */
     public function __construct($seed = null)
     {
-        if ($seed === null) {
-            $seed = (time() * getmypid()) ^ (1000000.0 * lcg_value());
-        }
-
         $this->state = new \SplFixedArray(self::N + 1);
-        $this->state[0] = $seed & 0xffffffff;
 
-        for ($i = 1; $i < self::N; $i++) {
-            $r = $this->state[$i - 1];
-            $this->state[$i] = (1812433253 * ($r ^ ($r >> 30)) + $i) & 0xffffffff;
+        if ($seed !== null) {
+            $this->seed($seed);
+        } else {
+            $this->seed(time() * getmypid()) ^ (1000000.0 * lcg_value());
         }
     }
 
@@ -82,6 +78,19 @@ class MT19937Engine extends AbstractEngine
         $this->state->next();
 
         return ($s1 ^ ($s1 >> 18)) >> 1;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function seed($seed)
+    {
+        $this->state[0] = $seed & 0xffffffff;
+
+        for ($i = 1; $i < self::N; $i++) {
+            $r = $this->state[$i - 1];
+            $this->state[$i] = (1812433253 * ($r ^ ($r >> 30)) + $i) & 0xffffffff;
+        }
     }
 
     /**

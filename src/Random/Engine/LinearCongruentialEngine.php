@@ -43,7 +43,8 @@ class LinearCongruentialEngine extends AbstractEngine
         $this->a = $a;
         $this->c = $c;
         $this->m = $m;
-        $this->x = $s;
+
+        $this->seed($s);
     }
 
     /**
@@ -68,5 +69,13 @@ class LinearCongruentialEngine extends AbstractEngine
     public function next()
     {
         return $this->x = ($this->a * $this->x + $this->c) % $this->m;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function seed($seed)
+    {
+        $this->x = $seed;
     }
 }
