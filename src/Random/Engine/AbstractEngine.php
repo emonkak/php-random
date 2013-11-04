@@ -21,6 +21,18 @@ abstract class AbstractEngine implements \IteratorAggregate
     }
 
     /**
+     * Advances the internal state by z notches.
+     *
+     * @param integer $z
+     */
+    public function discard($z)
+    {
+        while ($z-- > 0) {
+            $this->next();
+        }
+    }
+
+    /**
      * Returns the maximum number that will be generated.
      *
      * @return integer
