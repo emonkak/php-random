@@ -11,7 +11,7 @@ namespace Random\Distribution;
 
 use Random\Engine\AbstractEngine;
 
-class DiscreteDistribution extends AbstractDistribution
+class DiscreteDistribution extends UniformIntDistribution
 {
     /**
      * @var array
@@ -19,23 +19,13 @@ class DiscreteDistribution extends AbstractDistribution
     private $weights;
 
     /**
-     * @var UniformIntDistribution
-     */
-    private $uniform;
-
-    /**
      * @param array $weights
      */
     public function __construct(array $weights)
     {
-        $sum = 0;
-
-        foreach ($weights as $weight) {
-            $sum += $weight;
-        }
+        parent::__construct(0, array_sum($weights));
 
         $this->weights = $weights;
-        $this->uniform = new UniformIntDistribution(0, $sum);
     }
 
     /**
@@ -44,7 +34,7 @@ class DiscreteDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $result = $this->uniform->generate($engine);
+        $result = parent::generate($engine);
         $sum = 0;
 
         foreach ($this->weights as $key => $weight) {
