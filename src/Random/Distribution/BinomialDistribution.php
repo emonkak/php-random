@@ -38,14 +38,14 @@ class BinomialDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $count = 0;
+        $success = 0;
 
         for ($n = $this->n; $n > 0; $n--) {
-            if ($engine->nextDouble() < $this->probability) {
-                $count++;
+            if ($engine->nextDouble() <= $this->probability) {
+                $success++;
             }
         }
 
-        return $count;
+        return $success;
     }
 }
