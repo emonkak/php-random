@@ -36,4 +36,16 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
             $it->next();
         }
     }
+
+    public function testInvoke()
+    {
+        $engine =
+            $this->getMockForAbstractClass('Random\\Engine\\AbstractEngine');
+        $engine
+            ->expects($this->any())
+            ->method('next')
+            ->will($this->returnValue(1234));
+
+        $this->assertSame(1234, $engine());
+    }
 }

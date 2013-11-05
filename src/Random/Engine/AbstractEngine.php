@@ -12,6 +12,14 @@ namespace Random\Engine;
 abstract class AbstractEngine implements \IteratorAggregate
 {
     /**
+     * @return mixed
+     */
+    public function __invoke()
+    {
+        return $this->next();
+    }
+
+    /**
      * @see \IteratorAggregate
      * @return \Iterator
      */
