@@ -19,7 +19,7 @@ class BernoulliDistribution extends AbstractDistribution
     private $probability;
 
     /**
-     * @param interger $probability
+     * @param float $probability
      */
     public function __construct($probability)
     {
@@ -31,10 +31,6 @@ class BernoulliDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        if ($engine->nextDouble() < $this->probability) {
-            return true;
-        } else {
-            return false;
-        }
+        return $engine->nextDouble() <= $this->probability;
     }
 }
