@@ -17,6 +17,15 @@ abstract class AbstractDistribution
      * @param AbstractEngine $engine
      * @return mixed
      */
+    public function __invoke(AbstractEngine $engine)
+    {
+        return $this->generate($engine);
+    }
+
+    /**
+     * @param AbstractEngine $engine
+     * @return mixed
+     */
     abstract public function generate(AbstractEngine $engine);
 
     /**

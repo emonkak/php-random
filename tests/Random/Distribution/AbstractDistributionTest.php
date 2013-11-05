@@ -35,4 +35,17 @@ class AbstractDistributionTest extends DistributionTestCase
             $it->next();
         }
     }
+
+    public function testInvoke()
+    {
+        $distribution =
+            $this->getMockForAbstractClass('Random\\Distribution\\AbstractDistribution');
+        $distribution
+            ->expects($this->any())
+            ->method('generate')
+            ->with($this->identicalTo($this->engine))
+            ->will($this->returnValue(1234));
+
+        $this->assertSame(1234, $distribution($this->engine));
+    }
 }
