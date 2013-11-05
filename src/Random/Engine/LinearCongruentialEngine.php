@@ -52,7 +52,7 @@ class LinearCongruentialEngine extends AbstractEngine
      */
     public function max()
     {
-        return $this->m;
+        return $this->m - 1;
     }
 
     /**
@@ -60,7 +60,7 @@ class LinearCongruentialEngine extends AbstractEngine
      */
     public function min()
     {
-        return 0;
+        return $this->c == 0 ? 1 : 0;
     }
 
     /**
