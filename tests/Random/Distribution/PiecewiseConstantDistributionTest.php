@@ -17,7 +17,7 @@ class PiecewiseConstantDistributionTest extends DistributionTestCase
         $densities = array(1.0, 0.0);
         $distribution = new PiecewiseConstantDistribution($intervals, $densities);
 
-        for ($i = 100; $i--;) {
+        for ($i = 500; $i--;) {
             $n = $distribution->generate($this->engine);
 
             $this->assertInternalType('float', $n);
@@ -29,7 +29,7 @@ class PiecewiseConstantDistributionTest extends DistributionTestCase
         $densities = array(0.0, 1.0);
         $distribution = new PiecewiseConstantDistribution($intervals, $densities);
 
-        for ($i = 100; $i--;) {
+        for ($i = 500; $i--;) {
             $n = $distribution->generate($this->engine);
 
             $this->assertInternalType('float', $n);

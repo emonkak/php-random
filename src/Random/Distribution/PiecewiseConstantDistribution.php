@@ -11,7 +11,7 @@ namespace Random\Distribution;
 
 use Random\Engine\AbstractEngine;
 
-class PiecewiseConstantDistribution extends UniformIntDistribution
+class PiecewiseConstantDistribution extends AbstractDistribution
 {
     /**
      * @var array
@@ -46,12 +46,12 @@ class PiecewiseConstantDistribution extends UniformIntDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $index = $this->discreteDistribution->generate($engine);
-        $begin = $this->intervals[$index];
-        $end = $this->intervals[$index + 1];
+        $i = $this->discreteDistribution->generate($engine);
+        $dist = new UniformRealDistribution(
+            $this->intervals[$i],
+            $this->intervals[$i + 1]
+        );
 
-        $uniformRealDistribution = new UniformRealDistribution($begin, $end);
-
-        return $uniformRealDistribution->generate($engine);
+        return $dist->generate($engine);
     }
 }
