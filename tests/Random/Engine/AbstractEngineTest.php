@@ -48,4 +48,25 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(1234, $engine());
     }
+
+    public function testNextDouble()
+    {
+        $engine =
+            $this->getMockForAbstractClass('Random\\Engine\\AbstractEngine');
+        $engine
+            ->expects($this->any())
+            ->method('max')
+            ->will($this->returnValue(PHP_INT_MAX));
+        $engine
+            ->expects($this->any())
+            ->method('min')
+            ->will($this->returnValue(0));
+        $engine
+            ->expects($this->any())
+            ->method('next')
+            ->will($this->onConsecutiveCalls(0, PHP_INT_MAX));
+
+        $this->assertEquals(0.0, $engine->nextDouble());
+        $this->assertEquals(1.0, $engine->nextDouble());
+    }
 }
