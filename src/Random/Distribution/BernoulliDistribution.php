@@ -23,6 +23,8 @@ class BernoulliDistribution extends AbstractDistribution
      */
     public function __construct($probability)
     {
+        assert($probability >= 0 && $probability <= 1);
+
         $this->probability = $probability;
     }
 

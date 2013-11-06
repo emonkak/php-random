@@ -11,21 +11,28 @@ namespace Random\Distribution;
 
 use Random\Engine\AbstractEngine;
 
-class DiscreteDistribution extends UniformIntDistribution
+class DiscreteDistribution extends AbstractDistribution
 {
     /**
      * @var array
      */
-    private $weights;
+    private $probabilities;
 
     /**
-     * @param array $weights
+     * @var UniformRealDistribution
      */
-    public function __construct(array $weights)
-    {
-        parent::__construct(0, array_sum($weights));
+    private $uniformRealDistribution;
 
-        $this->weights = $weights;
+    /**
+     * @param array $probabilities
+     */
+    public function __construct(array $probabilities)
+    {
+        assert(!empty($probabilities));
+
+        $this->probabilities = $probabilities;
+        $this->uniformRealDistribution =
+            new UniformRealDistribution(0, array_sum($probabilities));
     }
 
     /**
@@ -34,11 +41,11 @@ class DiscreteDistribution extends UniformIntDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $result = parent::generate($engine);
+        $result = $this->uniformRealDistribution->generate($engine);
         $sum = 0;
 
-        foreach ($this->weights as $key => $weight) {
-            $sum += $weight;
+        foreach ($this->probabilities as $key => $probability) {
+            $sum += $probability;
 
             if ($result <= $sum) {
                 return $key;

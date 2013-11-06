@@ -34,6 +34,8 @@ class NormalDistribution extends AbstractDistribution
      */
     public function __construct($mean, $sigma)
     {
+        assert($sigma >= 0);
+
         $this->mean = $mean;
         $this->sigma = $sigma;
     }

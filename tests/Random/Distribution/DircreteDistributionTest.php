@@ -51,9 +51,9 @@ class DircreteDistributionTest extends DistributionTestCase
     /**
      * @expectedException LogicException
      */
-    public function testGenerateWhenEmpty()
+    public function testGenerateWithNegativeProbability()
     {
-        $distribution = new DiscreteDistribution(array());
+        $distribution = new DiscreteDistribution(array(-1));
 
         $this->assertNull($distribution->generate($this->engine));
     }

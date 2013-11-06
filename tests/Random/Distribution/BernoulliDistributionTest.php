@@ -11,7 +11,7 @@ namespace Random\Distribution;
 
 class BernoulliDistributionTest extends DistributionTestCase
 {
-    public function testGenerate_AlwaysTrue()
+    public function testGenerateItAlwaysTrue()
     {
         $distribution = new BernoulliDistribution(1.0);
 
@@ -20,7 +20,7 @@ class BernoulliDistributionTest extends DistributionTestCase
         }
     }
 
-    public function testGenerate_AlwaysFalse()
+    public function testGenerateItAlwaysFalse()
     {
         $distribution = new BernoulliDistribution(0.0);
 
