@@ -29,7 +29,7 @@ class BinomialDistribution extends AbstractDistribution
      */
     public function __construct($n, $probability)
     {
-        assert($probability >= 0 && $probability <= 1);
+        assert(0 <= $probability && $probability <= 1);
 
         $this->n = $n;
         $this->probability = $probability;
