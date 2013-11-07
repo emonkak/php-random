@@ -13,10 +13,11 @@ class BinomialDistributionTest extends DistributionTestCase
 {
     public function testGenerate()
     {
+        $engine = $this->createEngineMock();
         $distribution = new BinomialDistribution(10, 1);
 
         for ($i = 100; $i--;) {
-            $n = $distribution->generate($this->engine);
+            $n = $distribution->generate($engine);
 
             $this->assertInternalType('int', $n);
             $this->assertSame(10, $n);

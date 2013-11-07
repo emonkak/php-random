@@ -13,10 +13,11 @@ class UnniformRealDistributionTest extends DistributionTestCase
 {
     public function testGenerate()
     {
+        $engine = $this->createEngineMock();
         $distribution = new UniformRealDistribution(0.0, 10.0);
 
         for ($i = 100; $i--;) {
-            $n = $distribution->generate($this->engine);
+            $n = $distribution->generate($engine);
 
             $this->assertInternalType('float', $n);
             $this->assertGreaterThanOrEqual(0.0, $n);

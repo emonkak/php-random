@@ -17,10 +17,11 @@ class NormalDistributionTest extends DistributionTestCase
     {
         $meam = 0;
         $sigma = 1;
+        $engine = $this->createEngineMock();
         $distribution = new NormalDistribution($meam, $sigma);
 
         for ($i = 100; $i--;) {
-            $n = $distribution->generate($this->engine);
+            $n = $distribution->generate($engine);
 
             $this->assertInternalType('float', $n);
             $this->assertGreaterThanOrEqual($meam - 7 * $sigma, $n);

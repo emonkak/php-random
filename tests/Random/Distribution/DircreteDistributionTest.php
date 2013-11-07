@@ -19,13 +19,15 @@ class DircreteDistributionTest extends DistributionTestCase
             3 => 25,
             4 => 25,
         );
+
+        $engine = $this->createEngineMock();
         $distribution = new DiscreteDistribution($probabilities);
 
         $seenIndexes = array();
         $avaliableKeys = array_keys($probabilities);
 
         for ($i = 0; $i < 100; $i++) {
-            $j = $distribution->generate($this->engine);
+            $j = $distribution->generate($engine);
             $seenIndexes[$j] = 1;
             $this->assertContains($j, $avaliableKeys);
         }
@@ -41,10 +43,12 @@ class DircreteDistributionTest extends DistributionTestCase
             3 => 0,
             4 => 0,
         );
+
+        $engine = $this->createEngineMock();
         $distribution = new DiscreteDistribution($probabilities);
 
         for ($i = 0; $i < 100; $i++) {
-            $this->assertSame(1, $distribution->generate($this->engine));
+            $this->assertSame(1, $distribution->generate($engine));
         }
     }
 
@@ -53,8 +57,9 @@ class DircreteDistributionTest extends DistributionTestCase
      */
     public function testGenerateWithNegativeProbability()
     {
+        $engine = $this->createEngineMock();
         $distribution = new DiscreteDistribution(array(-1));
 
-        $this->assertNull($distribution->generate($this->engine));
+        $this->assertNull($distribution->generate($engine));
     }
 }

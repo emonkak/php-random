@@ -13,15 +13,16 @@ class AbstractDistributionTest extends DistributionTestCase
 {
     public function testIterate()
     {
+        $engine = $this->createEngineMock();
         $distribution =
             $this->getMockForAbstractClass('Random\\Distribution\\AbstractDistribution');
         $distribution
             ->expects($this->any())
             ->method('generate')
-            ->with($this->identicalTo($this->engine))
+            ->with($this->identicalTo($engine))
             ->will($this->returnValue(1234));
 
-        $it = $distribution->iterate($this->engine);
+        $it = $distribution->iterate($engine);
 
         $this->assertInstanceOf('Iterator', $it);
 
@@ -38,14 +39,15 @@ class AbstractDistributionTest extends DistributionTestCase
 
     public function testInvoke()
     {
+        $engine = $this->createEngineMock();
         $distribution =
             $this->getMockForAbstractClass('Random\\Distribution\\AbstractDistribution');
         $distribution
             ->expects($this->any())
             ->method('generate')
-            ->with($this->identicalTo($this->engine))
+            ->with($this->identicalTo($engine))
             ->will($this->returnValue(1234));
 
-        $this->assertSame(1234, $distribution($this->engine));
+        $this->assertSame(1234, $distribution($engine));
     }
 }

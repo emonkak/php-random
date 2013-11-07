@@ -13,10 +13,11 @@ class UnniformIntDistributionTest extends DistributionTestCase
 {
     public function testGenerate()
     {
+        $engine = $this->createEngineMock();
         $distribution = new UniformIntDistribution(0, 10);
 
         for ($i = 100; $i--;) {
-            $n = $distribution->generate($this->engine);
+            $n = $distribution->generate($engine);
 
             $this->assertInternalType('int', $n);
             $this->assertGreaterThanOrEqual(0, $n);
