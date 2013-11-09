@@ -19,7 +19,7 @@ class PiecewiseLinerDistribution extends AbstractDistribution
     /**
      * @var DiscreteDistribution
      */
-    private $discreteDistribution;
+    private $discrete;
 
     /**
      * @param array $intervals
@@ -41,7 +41,7 @@ class PiecewiseLinerDistribution extends AbstractDistribution
 
         $this->intervals = $intervals;
         $this->densities = $densities;
-        $this->discreteDistribution = new DiscreteDistribution($probabilities);
+        $this->discrete = new DiscreteDistribution($probabilities);
     }
 
     /**
@@ -49,7 +49,7 @@ class PiecewiseLinerDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $i = $this->discreteDistribution->generate($engine);
+        $i = $this->discrete->generate($engine);
         $isInRectangle = ($i % 2 === 0);
         $i = (int) ($i / 2);
 

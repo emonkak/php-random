@@ -26,7 +26,7 @@ class PiecewiseConstantDistribution extends AbstractDistribution
     /**
      * @var DiscreteDistribution
      */
-    private $discreteDistribution;
+    private $discrete;
 
     /**
      * @param array $intervals
@@ -38,7 +38,7 @@ class PiecewiseConstantDistribution extends AbstractDistribution
 
         $this->intervals = $intervals;
         $this->densities = $densities;
-        $this->discreteDistribution = new DiscreteDistribution($densities);
+        $this->discrete = new DiscreteDistribution($densities);
     }
 
     /**
@@ -46,7 +46,7 @@ class PiecewiseConstantDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $i = $this->discreteDistribution->generate($engine);
+        $i = $this->discrete->generate($engine);
         $dist = new UniformRealDistribution(
             $this->intervals[$i],
             $this->intervals[$i + 1]

@@ -21,7 +21,7 @@ class DiscreteDistribution extends AbstractDistribution
     /**
      * @var UniformRealDistribution
      */
-    private $uniformRealDistribution;
+    private $uniform;
 
     /**
      * @param array $probabilities
@@ -31,7 +31,7 @@ class DiscreteDistribution extends AbstractDistribution
         assert(!empty($probabilities));
 
         $this->probabilities = $probabilities;
-        $this->uniformRealDistribution =
+        $this->uniform =
             new UniformRealDistribution(0, array_sum($probabilities));
     }
 
@@ -41,7 +41,7 @@ class DiscreteDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $result = $this->uniformRealDistribution->generate($engine);
+        $result = $this->uniform->generate($engine);
         $sum = 0;
 
         foreach ($this->probabilities as $key => $probability) {
