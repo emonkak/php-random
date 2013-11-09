@@ -7,4 +7,19 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true">
+  <php>
+    <ini name="memory_limit" value="128M" />
+  </php>
+
+  <testsuites>
+    <testsuite>
+      <directory>./tests/</directory>
+    </testsuite>
+  </testsuites>
+
+  <filter>
+    <whitelist>
+      <directory>./src/Random/</directory>
+    </whitelist>
+  </filter>
 </phpunit>

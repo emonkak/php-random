@@ -1,49 +1,79 @@
-# random.php
+# Random.php
 
-random.php is a random number generator.
+[![Build Status](https://travis-ci.org/emonkak/random.php.png)](https://travis-ci.org/emonkak/random.php)
+[![Coverage Status](https://coveralls.io/repos/emonkak/random.php/badge.png)](https://coveralls.io/r/emonkak/random.php)
 
-It provides a PHP native implementation of the "Mersenne Twister" and "Xorshift" algorithm.
+Random.php is a random number generator.
 
-This Mersenne Twister algorithm is compatible to the build-in `mt_rand()`.
+It provides pseudo-random number Generators and random number distributions.
 
-# Requirements
+## Requirements
 
-- PHP 5.0 or higher
+- PHP 5.3 or higher
 - [Composer](http://getcomposer.org/)
 
-# Licence
+## Licence
 
 MIT Licence
 
-# Examples
+## Example
 
 ```php
-require __DIR__ . '/vendor/autoload.php';
+use Random\Engine\MT19937Engine;
+use Random\Distribution\NormalDistribution;
 
-use Random\MersenneTwister;
-use Random\XorShift;
+$seed = 100;  // Initial seed
+$engine = new MT19937Engine($seed);  // 32bit Mersenne Twister engine
+$distribution = new NormalDistribution(0, 1);  // Standard normal distribution
 
-$seed = 100;
-
-$r1 = new MersenneTwister($seed);
-$r1->range(0, 100);  // is between 0 and 100
-$r1->normal(0, 1);  // is a standard normal distribution
-
-$r2 = new Xorshift($seed);
-$r2->shuffle(range(0, 100));  // shuffle array
-
-$r3 = new MersenneTwisterNative($seed);  // build-in mt_rand() wrapper
-$r3->range(0, 100);  // is between 0 and 100
+// Generate a random number with the normal distribution.
+$distribution->generate($engine);
 ```
 
-# Available random generator methods
+## Engine
 
-- `float random()`
-- `int range(int $min, int $max)`
-- `array shuffle(array $xs)`
-- `float uniform(float $min, float $max)`
-- `float exponential(float $lambda)`
-- `float normal(float $mean, float $sigma)`
-- `int bernoulli(float $probability)`
-- `int binomial(int $n, float $probability)`
-- `float poisson(float $lambda)`
+- `MT19937Engine`
+
+	The random generator engine according to [Mersenne Twister](http://en.wikipedia.org/wiki/Mersenne_twister).
+	It is full-compatible to the build-in `mt_rand()`.
+
+	```php
+	// Also, the initial seed algorithm is full-compatible to the build-in `mt_srand()`
+	$engine = new MT19937Engine(/* $seed */);
+
+	// Reset the seed.
+	$engine->seed(1234);
+
+	// Get a next random number from the current generator state.
+	$number = $engine->next();  // as int
+	$number = $engine->nextDouble();  // as float
+
+	// Get the minimum and maximum number which generate a value by the engine.
+	$minimum = $engine->min();
+	$maximum = $engine->max();
+
+	// Iterate the generator engine.
+	foreach (new LimitIterator($engine, 0, 100) as $n) {
+	}
+	```
+
+- `XorShift128Engine`
+
+	The random generator engine according to [Xorshift](http://en.wikipedia.org/wiki/XorShift) 128 bit algorithm.
+
+	```php
+	// If unspecified the seed, it is always specified the default seed value.
+	$engine = new XorShift128Engine(/* $seed */);
+
+	// See also `MT19937Engine`.
+	```
+
+## Distribution
+
+- `BernoulliDistribution`
+- `BinomialDistribution`
+- `DiscreteDistribution`
+- `DistributionIterator`
+- `NormalDistribution`
+- `UniformIntDistribution`
+- `UniformRealDistribution`
