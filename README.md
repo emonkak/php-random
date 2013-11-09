@@ -88,7 +88,10 @@ $distribution->generate($engine);
 - `BinomialDistribution`
 - `DiscreteDistribution`
 - `DistributionIterator`
+- `ExponentialDistribution`
+- `GammaDistribution`
 - `GeometricDistribution`
+- `LogNormalDistribution`
 - `NormalDistribution`
 - `PiecewiseConstantDistribution`
 - `PiecewiseLinerDistribution`
