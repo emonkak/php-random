@@ -11,6 +11,13 @@ namespace Random\Distribution;
 
 class BernoulliDistributionTest extends DistributionTestCase
 {
+    public function testGetP()
+    {
+        $distribution = new BernoulliDistribution(1.0);
+
+        $this->assertSame(1.0, $distribution->getP());
+    }
+
     public function testGenerateItAlwaysTrue()
     {
         $engine = $this->createEngineMock();

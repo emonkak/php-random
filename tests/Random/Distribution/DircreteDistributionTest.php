@@ -11,6 +11,20 @@ namespace Random\Distribution;
 
 class DircreteDistributionTest extends DistributionTestCase
 {
+    public function testGetProbabilities()
+    {
+        $probabilities = array(
+            1 => 25,
+            2 => 25,
+            3 => 25,
+            4 => 25,
+        );
+
+        $distribution = new DiscreteDistribution($probabilities);
+
+        $this->assertSame($probabilities, $distribution->getProbabilities());
+    }
+
     public function testGenerateEqually()
     {
         $probabilities = array(

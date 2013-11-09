@@ -44,6 +44,22 @@ class GammaDistribution extends AbstractDistribution
     }
 
     /**
+     * @return float
+     */
+    public function getAlpha()
+    {
+        return $this->alpha;
+    }
+
+    /**
+     * @return float
+     */
+    public function getBeta()
+    {
+        return $this->beta;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function generate(AbstractEngine $engine)

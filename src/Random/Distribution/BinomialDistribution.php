@@ -24,15 +24,32 @@ class BinomialDistribution extends AbstractDistribution
     private $probability;
 
     /**
-     * @param integer $n
-     * @param float $probability
+     * @param integer $t
+     * @param float $p
      */
-    public function __construct($n, $probability)
+    public function __construct($t, $p)
     {
-        assert(0 <= $probability && $probability <= 1);
+        assert(0 <= $t);
+        assert(0 <= $p && $p <= 1);
 
-        $this->n = $n;
-        $this->probability = $probability;
+        $this->t = $t;
+        $this->p = $p;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getT()
+    {
+        return $this->t;
+    }
+
+    /**
+     * @return float
+     */
+    public function getP()
+    {
+        return $this->p;
     }
 
     /**
@@ -42,8 +59,8 @@ class BinomialDistribution extends AbstractDistribution
     {
         $success = 0;
 
-        for ($n = $this->n; $n > 0; $n--) {
-            if ($engine->nextFloat() <= $this->probability) {
+        for ($i = 0; $i < $this->t; ++$i) {
+            if ($engine->nextFloat() <= $this->p) {
                 $success++;
             }
         }

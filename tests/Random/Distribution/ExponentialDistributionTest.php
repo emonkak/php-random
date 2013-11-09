@@ -11,6 +11,13 @@ namespace Random\Distribution;
 
 class ExponentialDistributionTest extends DistributionTestCase
 {
+    public function testGetLambda()
+    {
+        $distribution = new ExponentialDistribution(1.0);
+
+        $this->assertSame(1.0, $distribution->getLambda());
+    }
+
     public function testGenerate()
     {
         $engine = $this->createEngineMock();

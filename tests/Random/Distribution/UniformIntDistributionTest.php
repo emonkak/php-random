@@ -11,6 +11,20 @@ namespace Random\Distribution;
 
 class UnniformIntDistributionTest extends DistributionTestCase
 {
+    public function testGetMax()
+    {
+        $distribution = new UniformIntDistribution(0, 10);
+
+        $this->assertSame(10, $distribution->getMax());
+    }
+
+    public function testGetMin()
+    {
+        $distribution = new UniformIntDistribution(0, 10);
+
+        $this->assertSame(0, $distribution->getMin());
+    }
+
     public function testGenerate()
     {
         $engine = $this->createEngineMock();

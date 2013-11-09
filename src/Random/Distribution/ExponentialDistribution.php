@@ -29,6 +29,14 @@ class ExponentialDistribution extends AbstractDistribution
     }
 
     /**
+     * @return float
+     */
+    public function getLambda()
+    {
+        return $this->lambda;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function generate(AbstractEngine $engine)

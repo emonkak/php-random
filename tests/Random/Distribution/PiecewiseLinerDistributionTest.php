@@ -11,6 +11,23 @@ namespace Random\Distribution;
 
 class PiecewiseLinerDistributionTest extends DistributionTestCase
 {
+    public function testGetIntervals()
+    {
+        $intervals = array(0, 5, 10, 15);
+        $densities = array(0, 1,  1,  0);
+        $distribution = new PiecewiseLinerDistribution($intervals, $densities);
+
+        $this->assertSame($intervals, $distribution->getIntervals());
+    }
+
+    public function testGetDensities()
+    {
+        $intervals = array(0, 5, 10, 15);
+        $densities = array(0, 1,  1,  0);
+        $distribution = new PiecewiseLinerDistribution($intervals, $densities);
+
+        $this->assertSame($densities, $distribution->getDensities());
+    }
     public function testGenerate()
     {
         $intervals = array(0, 5, 10, 15);

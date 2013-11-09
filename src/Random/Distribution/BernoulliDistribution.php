@@ -16,16 +16,24 @@ class BernoulliDistribution extends AbstractDistribution
     /**
      * @var float
      */
-    private $probability;
+    private $p;
 
     /**
-     * @param float $probability
+     * @param float $p
      */
-    public function __construct($probability)
+    public function __construct($p)
     {
-        assert($probability >= 0 && $probability <= 1);
+        assert(0 <= $p && $p <= 1);
 
-        $this->probability = $probability;
+        $this->p = $p;
+    }
+
+    /**
+     * @return float
+     */
+    public function getP()
+    {
+        return $this->p;
     }
 
     /**
@@ -33,6 +41,6 @@ class BernoulliDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        return $engine->nextFloat() <= $this->probability;
+        return $engine->nextFloat() <= $this->p;
     }
 }

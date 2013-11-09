@@ -16,16 +16,24 @@ class GeometricDistribution extends AbstractDistribution
     /**
      * @var float
      */
-    private $probability;
+    private $p;
 
     /**
-     * @param float $probability
+     * @param float $p
      */
-    public function __construct($probability)
+    public function __construct($p)
     {
-        assert(0 < $probability && $probability < 1);
+        assert(0 < $p && $p < 1);
 
-        $this->probability = $probability;
+        $this->p = $p;
+    }
+
+    /**
+     * @return float
+     */
+    public function getP()
+    {
+        return $this->p;
     }
 
     /**
@@ -33,7 +41,7 @@ class GeometricDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $result = log(1 - $engine->nextFloat()) / log(1 - $this->probability);
+        $result = log(1 - $engine->nextFloat()) / log(1 - $this->p);
 
         return (int) $result;
     }

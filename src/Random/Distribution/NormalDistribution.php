@@ -24,11 +24,6 @@ class NormalDistribution extends AbstractDistribution
     private $sigma;
 
     /**
-     * @var float
-     */
-    private $next;
-
-    /**
      * @param float $mean
      * @param float $sigma
      */
@@ -41,26 +36,30 @@ class NormalDistribution extends AbstractDistribution
     }
 
     /**
+     * @return float
+     */
+    public function getMean()
+    {
+        return $this->mean;
+    }
+
+    /**
+     * @return float
+     */
+    public function getSigma()
+    {
+        return $this->sigma;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function generate(AbstractEngine $engine)
     {
-        if ($this->next === null) {
-            do {
-                $x = 2.0 * $engine->nextFloat() - 1.0;
-                $y = 2.0 * $engine->nextFloat() - 1.0;
-                $r2 = $x * $x + $y * $y;
-            } while ($r2 > 1.0 || $r2 == 0.0);
+        $r1 = $engine->nextFloat();
+        $r2 = $engine->nextFloat();
 
-            $m = sqrt(-2 * log($r2) / $r2);
-
-            $this->next = $x * $m;
-            $result = $y * $m;
-        } else {
-            $result = $this->next;
-            $this->next = null;
-        }
-
-        return $result * $this->sigma + $this->mean;
+        return $this->mean + $this->sigma
+               * sqrt(-2 * log($r1)) * cos(2 * M_PI * $r2);
     }
 }

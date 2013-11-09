@@ -30,9 +30,18 @@ class DiscreteDistribution extends AbstractDistribution
     {
         assert(!empty($probabilities));
 
+        // TODO: Use alias table
         $this->probabilities = $probabilities;
         $this->uniform =
             new UniformRealDistribution(0, array_sum($probabilities));
+    }
+
+    /**
+     * @return array
+     */
+    public function getProbabilities()
+    {
+        return $this->probabilities;
     }
 
     /**

@@ -11,6 +11,20 @@ namespace Random\Distribution;
 
 class BinomialDistributionTest extends DistributionTestCase
 {
+    public function testGetT()
+    {
+        $distribution = new BinomialDistribution(10, 1);
+
+        $this->assertSame(10, $distribution->getT());
+    }
+
+    public function testGetP()
+    {
+        $distribution = new BinomialDistribution(10, 1);
+
+        $this->assertSame(1, $distribution->getP());
+    }
+
     public function testGenerate()
     {
         $engine = $this->createEngineMock();

@@ -34,6 +34,22 @@ class UniformIntDistribution extends AbstractDistribution
     }
 
     /**
+     * @return integer
+     */
+    public function getMin()
+    {
+        return $this->min;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getMax()
+    {
+        return $this->max;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function generate(AbstractEngine $engine)

@@ -42,6 +42,22 @@ class PiecewiseConstantDistribution extends AbstractDistribution
     }
 
     /**
+     * @return array
+     */
+    public function getIntervals()
+    {
+        return $this->intervals;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDensities()
+    {
+        return $this->densities;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function generate(AbstractEngine $engine)

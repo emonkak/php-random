@@ -11,6 +11,13 @@ namespace Random\Distribution;
 
 class GeometricDistributionTest extends DistributionTestCase
 {
+    public function testGetBeta()
+    {
+        $distribution = new GeometricDistribution(0.5);
+
+        $this->assertSame(0.5, $distribution->getP());
+    }
+
     public function testGenerate()
     {
         $engine = $this->createEngineMock();

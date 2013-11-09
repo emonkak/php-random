@@ -11,6 +11,20 @@ namespace Random\Distribution;
 
 class GammaDistributionTest extends DistributionTestCase
 {
+    public function testGetAlpha()
+    {
+        $distribution = new GammaDistribution(0.75, 0.25);
+
+        $this->assertSame(0.75, $distribution->getAlpha());
+    }
+
+    public function testGetBeta()
+    {
+        $distribution = new GammaDistribution(0.75, 0.25);
+
+        $this->assertSame(0.25, $distribution->getBeta());
+    }
+
     public function testGenerate()
     {
         $engine = $this->createEngineMock();
