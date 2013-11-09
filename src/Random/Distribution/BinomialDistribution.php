@@ -43,7 +43,7 @@ class BinomialDistribution extends AbstractDistribution
         $success = 0;
 
         for ($n = $this->n; $n > 0; $n--) {
-            if ($engine->nextDouble() <= $this->probability) {
+            if ($engine->nextFloat() <= $this->probability) {
                 $success++;
             }
         }

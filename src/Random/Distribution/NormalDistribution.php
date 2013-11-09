@@ -47,8 +47,8 @@ class NormalDistribution extends AbstractDistribution
     {
         if ($this->next === null) {
             do {
-                $x = 2.0 * $engine->nextDouble() - 1.0;
-                $y = 2.0 * $engine->nextDouble() - 1.0;
+                $x = 2.0 * $engine->nextFloat() - 1.0;
+                $y = 2.0 * $engine->nextFloat() - 1.0;
                 $r2 = $x * $x + $y * $y;
             } while ($r2 > 1.0 || $r2 == 0.0);
 

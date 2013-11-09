@@ -38,6 +38,6 @@ class UniformRealDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        return $this->min + ($this->max - $this->min) * $engine->nextDouble();
+        return $this->min + ($this->max - $this->min) * $engine->nextFloat();
     }
 }

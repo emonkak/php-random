@@ -33,6 +33,6 @@ class BernoulliDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        return $engine->nextDouble() <= $this->probability;
+        return $engine->nextFloat() <= $this->probability;
     }
 }

@@ -52,7 +52,7 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
         $engine = new XorShift128Engine($seed);
 
         for ($i = self::NUMBER_OF_TRIALS; $i--;) {
-            $n = $engine->nextDouble();
+            $n = $engine->nextFloat();
 
             $this->assertGreaterThanOrEqual(0.0, $n);
             $this->assertLessThan(1.0, $n);

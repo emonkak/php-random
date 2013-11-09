@@ -3,9 +3,9 @@
 [![Build Status](https://travis-ci.org/emonkak/random.php.png)](https://travis-ci.org/emonkak/random.php)
 [![Coverage Status](https://coveralls.io/repos/emonkak/random.php/badge.png)](https://coveralls.io/r/emonkak/random.php)
 
-Random.php is a random number generator.
+Random.php is a random number generator library.
 
-It provides pseudo-random number Generators and random number distributions.
+It provides pseudo-random number generators and probability distributions.
 
 ## Requirements
 
@@ -32,13 +32,21 @@ $distribution->generate($engine);
 
 ## Engine
 
+- `KnuthBEngine`
+
+- `LinearCongruentialEngine`
+
+- `MinstdRand0Engine`
+
+- `MinstdRandEngine`
+
 - `MT19937Engine`
 
 	The random generator engine according to [Mersenne Twister](http://en.wikipedia.org/wiki/Mersenne_twister).
-	It is full-compatible to the build-in `mt_rand()`.
+	It is full-compatible to the built-in `mt_rand()`.
 
 	```php
-	// Also, the initial seed algorithm is full-compatible to the build-in `mt_srand()`
+	// Also, the initial seed algorithm is full-compatible to the built-in `mt_srand()`
 	$engine = new MT19937Engine(/* $seed */);
 
 	// Reset the seed.
@@ -46,7 +54,7 @@ $distribution->generate($engine);
 
 	// Get a next random number from the current generator state.
 	$number = $engine->next();  // as int
-	$number = $engine->nextDouble();  // as float
+	$number = $engine->nextFloat();  // as float
 
 	// Get the minimum and maximum number which generate a value by the engine.
 	$minimum = $engine->min();
@@ -56,6 +64,12 @@ $distribution->generate($engine);
 	foreach (new LimitIterator($engine, 0, 100) as $n) {
 	}
 	```
+
+- `MTRandWrapper`
+
+	The wrapper for the built-in `mt_rand()`.
+
+- `ShuffleOrderEngine`
 
 - `XorShift128Engine`
 
@@ -74,6 +88,9 @@ $distribution->generate($engine);
 - `BinomialDistribution`
 - `DiscreteDistribution`
 - `DistributionIterator`
+- `GeometricDistribution`
 - `NormalDistribution`
+- `PiecewiseConstantDistribution`
+- `PiecewiseLinerDistribution`
 - `UniformIntDistribution`
 - `UniformRealDistribution`

@@ -39,6 +39,6 @@ class UniformIntDistribution extends AbstractDistribution
     public function generate(AbstractEngine $engine)
     {
         return (int) floor($this->min + ($this->max - $this->min + 1.0)
-                                      * $engine->nextDouble());
+                                      * $engine->nextFloat());
     }
 }

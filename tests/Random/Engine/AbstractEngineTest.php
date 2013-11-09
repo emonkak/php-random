@@ -66,7 +66,7 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
             ->method('next')
             ->will($this->onConsecutiveCalls(0, PHP_INT_MAX));
 
-        $this->assertEquals(0.0, $engine->nextDouble());
-        $this->assertEquals(1.0, $engine->nextDouble());
+        $this->assertEquals(0.0, $engine->nextFloat());
+        $this->assertEquals(1.0, $engine->nextFloat());
     }
 }

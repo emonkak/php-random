@@ -1,6 +1,6 @@
 {
     "name": "emonkak/random.php",
-    "description": "A random number generator",
+    "description": "A random number generator library",
     "version": "0.0.0",
     "type": "library",
     "keywords": ["random"],

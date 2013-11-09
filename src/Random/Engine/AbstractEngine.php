@@ -66,7 +66,7 @@ abstract class AbstractEngine implements \IteratorAggregate
      *
      * @return float
      */
-    public function nextDouble()
+    public function nextFloat()
     {
         return $this->next() / ($this->max() - $this->min());
     }
