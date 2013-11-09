@@ -37,6 +37,7 @@ class LinearCongruentialEngine extends AbstractEngine
      * @param integer $a
      * @param integer $c
      * @param integer $m
+     * @param integer $s
      */
     public function __construct($a, $c, $m, $s = self::DEFAULT_SEED)
     {
