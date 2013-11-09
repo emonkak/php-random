@@ -9,8 +9,6 @@
 
 namespace Random\Distribution;
 
-use Random\Engine\MT19937Engine;
-
 class GeometricDistributionTest extends DistributionTestCase
 {
     public function testGenerate()
