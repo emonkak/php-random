@@ -7,12 +7,12 @@ use Random\Engine\AbstractEngine;
 class PiecewiseLinerDistribution extends AbstractDistribution
 {
     /**
-     * @var array
+     * @var float[]
      */
     private $intervals;
 
     /**
-     * @var array
+     * @var float[]
      */
     private $densities;
 
@@ -22,8 +22,8 @@ class PiecewiseLinerDistribution extends AbstractDistribution
     private $discrete;
 
     /**
-     * @param array $intervals
-     * @param array $densities
+     * @param float[] $intervals
+     * @param float[] $densities
      */
     public function __construct(array $intervals, array $densities)
     {
@@ -45,7 +45,7 @@ class PiecewiseLinerDistribution extends AbstractDistribution
     }
 
     /**
-     * @return array
+     * @return float[]
      */
     public function getIntervals()
     {
@@ -53,7 +53,7 @@ class PiecewiseLinerDistribution extends AbstractDistribution
     }
 
     /**
-     * @return array
+     * @return float[]
      */
     public function getDensities()
     {

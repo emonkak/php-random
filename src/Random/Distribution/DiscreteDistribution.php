@@ -14,7 +14,7 @@ use Random\Engine\AbstractEngine;
 class DiscreteDistribution extends AbstractDistribution
 {
     /**
-     * @var array
+     * @var float[]
      */
     private $probabilities;
 
@@ -24,7 +24,7 @@ class DiscreteDistribution extends AbstractDistribution
     private $uniform;
 
     /**
-     * @param array $probabilities
+     * @param float[] $probabilities
      */
     public function __construct(array $probabilities)
     {
@@ -37,7 +37,7 @@ class DiscreteDistribution extends AbstractDistribution
     }
 
     /**
-     * @return array
+     * @return float[]
      */
     public function getProbabilities()
     {
