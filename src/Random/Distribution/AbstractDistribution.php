@@ -34,6 +34,6 @@ abstract class AbstractDistribution
      */
     public function iterate(AbstractEngine $engine)
     {
-        return new DistributionIterator($engine, $this);
+        return new DistributionIterator($this, $engine);
     }
 }

@@ -14,14 +14,14 @@ use Random\Engine\AbstractEngine;
 class DistributionIterator implements \Iterator
 {
     /**
-     * @var AbstractEngine
-     */
-    private $engine;
-
-    /**
      * @var AbstractDistribution
      */
     private $distribution;
+
+    /**
+     * @var AbstractEngine
+     */
+    private $engine;
 
     /**
      * @var float
@@ -34,13 +34,13 @@ class DistributionIterator implements \Iterator
     private $tick;
 
     /**
-     * @param AbstractEngine      $engine
      * @param AbstractDistribution $distribution
+     * @param AbstractEngine       $engine
      */
-    public function __construct(AbstractEngine $engine, AbstractDistribution $distribution)
+    public function __construct(AbstractDistribution $distribution, AbstractEngine $engine)
     {
-        $this->engine = $engine;
         $this->distribution = $distribution;
+        $this->engine = $engine;
     }
 
     /**
