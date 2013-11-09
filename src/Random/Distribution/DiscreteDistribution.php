@@ -61,6 +61,6 @@ class DiscreteDistribution extends AbstractDistribution
             }
         }
 
-        throw new \LogicException('Generating number is not possible.');
+        throw new \LogicException('Number generation is not possible.');
     }
 }
