@@ -69,7 +69,7 @@ class LinearCongruentialEngine extends AbstractEngine
      */
     public function next()
     {
-        return $this->x = ($this->a * $this->x + $this->c) % $this->m;
+        return $this->x = (int) fmod($this->a * $this->x + $this->c, $this->m);
     }
 
     /**
