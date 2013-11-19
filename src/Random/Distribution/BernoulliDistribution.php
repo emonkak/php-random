@@ -41,6 +41,6 @@ class BernoulliDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        return $engine->nextFloat() <= $this->p;
+        return $engine->nextDouble() <= $this->p;
     }
 }

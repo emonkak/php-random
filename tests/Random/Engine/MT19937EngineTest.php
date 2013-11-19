@@ -51,7 +51,7 @@ class MT19937EngineTest extends \PHPUnit_Framework_TestCase
         $engine = new MT19937Engine($seed);
 
         for ($i = MT19937Engine::N + 1; $i--;) {
-            $n = $engine->nextFloat();
+            $n = $engine->nextDouble();
 
             $this->assertGreaterThanOrEqual(0.0, $n);
             $this->assertLessThan(1.0, $n);

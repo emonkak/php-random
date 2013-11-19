@@ -41,6 +41,6 @@ class ExponentialDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        return -1 / $this->lambda * log(1 - $engine->nextFloat());
+        return -1 / $this->lambda * log(1 - $engine->nextDouble());
     }
 }

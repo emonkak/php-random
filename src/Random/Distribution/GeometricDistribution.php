@@ -41,7 +41,7 @@ class GeometricDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $result = log(1 - $engine->nextFloat()) / log(1 - $this->p);
+        $result = log(1 - $engine->nextDouble()) / log(1 - $this->p);
 
         return (int) $result;
     }

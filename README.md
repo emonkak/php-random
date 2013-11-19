@@ -54,7 +54,7 @@ $distribution->generate($engine);
 
 	// Get a next random number from the current generator state.
 	$number = $engine->next();  // as int
-	$number = $engine->nextFloat();  // as float
+	$number = $engine->nextDouble();  // as float
 
 	// Get the minimum and maximum number which generate a value by the engine.
 	$minimum = $engine->min();

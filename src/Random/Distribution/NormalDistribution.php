@@ -56,8 +56,8 @@ class NormalDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        $r1 = $engine->nextFloat();
-        $r2 = $engine->nextFloat();
+        $r1 = $engine->nextDouble();
+        $r2 = $engine->nextDouble();
 
         return $this->mean + $this->sigma
                * sqrt(-2 * log($r1)) * cos(2 * M_PI * $r2);

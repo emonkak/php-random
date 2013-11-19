@@ -68,14 +68,14 @@ class GammaDistribution extends AbstractDistribution
             return $this->exponential->generate($engine) * $this->beta;
         } elseif ($this->alpha > 1.0) {
             for (;;) {
-                $y = tan(M_PI * $engine->nextFloat());
+                $y = tan(M_PI * $engine->nextDouble());
                 $x = sqrt(2.0 * $this->alpha - 1.0) * $y + $this->alpha - 1.0;
 
                 if ($x <= 0.0) {
                     continue;
                 }
 
-                if ($engine->nextFloat()
+                if ($engine->nextDouble()
                     > (1.0 + $y * $y)
                       * exp(($this->alpha - 1.0)
                             * log($x / ($this->alpha - 1.0))
@@ -87,7 +87,7 @@ class GammaDistribution extends AbstractDistribution
             }
         } else {  // $this->alpha < 1.0
             for (;;) {
-                $u = $engine->nextFloat();
+                $u = $engine->nextDouble();
                 $y = $this->exponential->generate($engine);
 
                 if ($u < $this->p) {
