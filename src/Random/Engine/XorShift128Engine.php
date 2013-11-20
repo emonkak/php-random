@@ -77,9 +77,10 @@ class XorShift128Engine extends AbstractEngine
         $this->x = $this->y;
         $this->y = $this->z;
         $this->z = $this->w;
-        $this->w = ($this->w ^ ($this->w >> 19) ^ ($t ^ ($t >> 8))) & 0xffffffff;
+        $this->w = ($this->w ^ $this->shiftR($this->w, 19) ^ ($t ^ $this->shiftR($t, 8))) & 0xffffffff;
 
-        return $this->w;
+        // Kill the sign bit for 32bit systems.
+        return $this->w & ~(PHP_INT_MAX + 1);
     }
 
     /**
@@ -88,9 +89,19 @@ class XorShift128Engine extends AbstractEngine
     public function seed($seed)
     {
         // https://gist.github.com/gintenlabo/604721
-        $this->x = self::X ^  $seed                        & 0xffffffff;
-        $this->y = self::Y ^ ($seed << 17) | ($seed >> 15) & 0xffffffff;
-        $this->z = self::Z ^ ($seed << 31) | ($seed >>  1) & 0xffffffff;
-        $this->w = self::W ^ ($seed << 18) | ($seed >> 14) & 0xffffffff;
+        $this->x = self::X ^  $seed                                   & 0xffffffff;
+        $this->y = self::Y ^ ($seed << 17) | $this->shiftR($seed, 15) & 0xffffffff;
+        $this->z = self::Z ^ ($seed << 31) | $this->shiftR($seed,  1) & 0xffffffff;
+        $this->w = self::W ^ ($seed << 18) | $this->shiftR($seed, 14) & 0xffffffff;
+    }
+
+    /**
+     * @param integer $x
+     * @param integer $i
+     * @return integer
+     */
+    private function shiftR($x, $i)
+    {
+        return $x >> $i & ~(~0 << (32 - $i));
     }
 }
