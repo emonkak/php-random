@@ -56,7 +56,7 @@ class XorShift128Engine extends AbstractEngine
      */
     public function max()
     {
-        return 0xffffffff;
+        return 0x7fffffff;
     }
 
     /**
@@ -80,7 +80,7 @@ class XorShift128Engine extends AbstractEngine
         $this->w = ($this->w ^ $this->shiftR($this->w, 19) ^ ($t ^ $this->shiftR($t, 8))) & 0xffffffff;
 
         // Kill the sign bit for 32bit systems.
-        return $this->w & ~(PHP_INT_MAX + 1);
+        return $this->w & 0x7fffffff;
     }
 
     /**

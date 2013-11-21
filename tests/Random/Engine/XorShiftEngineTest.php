@@ -19,7 +19,7 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
     {
         $engine = new XorShift128Engine();
 
-        $this->assertSame(0xffffffff, $engine->max());
+        $this->assertSame(0x7fffffff, $engine->max());
     }
 
     public function testMin()
