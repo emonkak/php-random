@@ -1,7 +1,7 @@
-# Random.php
+# emonkak/random
 
-[![Build Status](https://travis-ci.org/emonkak/random.php.png)](https://travis-ci.org/emonkak/random.php)
-[![Coverage Status](https://coveralls.io/repos/emonkak/random.php/badge.png)](https://coveralls.io/r/emonkak/random.php)
+[![Build Status](https://travis-ci.org/emonkak/php-random.png)](https://travis-ci.org/emonkak/php-random)
+[![Coverage Status](https://coveralls.io/repos/emonkak/php-random/badge.png)](https://coveralls.io/r/emonkak/php-random)
 
 Random.php is a random number library.
 
