@@ -66,15 +66,4 @@ class ShuffleOrderEngineTest extends \PHPUnit_Framework_TestCase
             $this->assertContains($engine->next(), array(1, 2, 3, 4));
         }
     }
-
-    public function testSeed()
-    {
-        $this->engine
-            ->expects($this->once())
-            ->method('seed')
-            ->with($this->identicalTo(1234));
-
-        $engine = new ShuffleOrderEngine($this->engine, 8);
-        $engine->seed(1234);
-    }
 }

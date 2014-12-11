@@ -19,14 +19,14 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
 
     public function testMax()
     {
-        $engine = new XorShift128Engine();
+        $engine = new XorShift128Engine(123456789, 362436069, 521288629, 88675123);
 
         $this->assertSame(0x7fffffff, $engine->max());
     }
 
     public function testMin()
     {
-        $engine = new XorShift128Engine();
+        $engine = new XorShift128Engine(123456789, 362436069, 521288629, 88675123);
 
         $this->assertSame(0, $engine->min());
     }
@@ -36,7 +36,7 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
      */
     public function testNext($seed)
     {
-        $engine = new XorShift128Engine($seed);
+        $engine = XorShift128Engine::of($seed);
 
         for ($i = self::NUMBER_OF_TRIALS; $i--;) {
             $n = $engine->next();
@@ -51,7 +51,7 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
      */
     public function testNextDouble($seed)
     {
-        $engine = new XorShift128Engine($seed);
+        $engine = XorShift128Engine::of($seed);
 
         for ($i = self::NUMBER_OF_TRIALS; $i--;) {
             $n = $engine->nextDouble();

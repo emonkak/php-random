@@ -11,6 +11,13 @@ namespace Emonkak\Random\Engine;
 
 class MTRandWrapper extends AbstractEngine
 {
+    public function __construct($seed = null)
+    {
+        if ($seed !== null) {
+            mt_srand($seed);
+        }
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -33,13 +40,5 @@ class MTRandWrapper extends AbstractEngine
     public function next()
     {
         return mt_rand();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function seed($seed)
-    {
-        mt_srand($seed);
     }
 }

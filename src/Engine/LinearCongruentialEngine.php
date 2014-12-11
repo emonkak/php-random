@@ -37,15 +37,14 @@ class LinearCongruentialEngine extends AbstractEngine
      * @param integer $a
      * @param integer $c
      * @param integer $m
-     * @param integer $s
+     * @param integer $x The seed number
      */
-    public function __construct($a, $c, $m, $s = self::DEFAULT_SEED)
+    public function __construct($a, $c, $m, $x)
     {
         $this->a = $a;
         $this->c = $c;
         $this->m = $m;
-
-        $this->seed($s);
+        $this->x = $x;
     }
 
     /**
@@ -70,13 +69,5 @@ class LinearCongruentialEngine extends AbstractEngine
     public function next()
     {
         return $this->x = (int) fmod($this->a * $this->x + $this->c, $this->m);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function seed($seed)
-    {
-        $this->x = $seed;
     }
 }

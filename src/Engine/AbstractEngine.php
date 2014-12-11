@@ -70,11 +70,4 @@ abstract class AbstractEngine implements \IteratorAggregate
     {
         return $this->next() / ($this->max() - $this->min());
     }
-
-    /**
-     * Sets the initial seed.
-     *
-     * @param integer $seed
-     */
-    abstract public function seed($seed);
 }

@@ -9,6 +9,8 @@
 
 namespace Emonkak\Random\Engine;
 
+use Emonkak\Random\Util\Bits;
+
 class MT19937Engine extends AbstractEngine
 {
     const N = 624;
@@ -71,27 +73,27 @@ class MT19937Engine extends AbstractEngine
         $this->left--;
 
         $s1 = $this->state->current();
-        $s1 ^= $this->shiftR($s1, 11);
+        $s1 ^= Bits::shiftR($s1, 11);
         $s1 ^= ($s1 <<  7) & 0x9d2c5680;
         $s1 ^= ($s1 << 15) & 0xefc60000;
 
         $this->state->next();
 
-        return $this->shiftR($s1 ^ $this->shiftR($s1, 18), 1);
+        return Bits::shiftR($s1 ^ Bits::shiftR($s1, 18), 1);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function seed($seed)
+    private function seed($seed)
     {
         $this->state[0] = $seed & 0xffffffff;
 
         for ($i = 1; $i < self::N; $i++) {
             $r = $this->state[$i - 1];
             $this->state[$i] =
-                $this->multiply(1812433253,
-                                $r ^ $this->shiftR($r, 30)) + $i & 0xffffffff;
+                Bits::multiply(1812433253,
+                               $r ^ Bits::shiftR($r, 30)) + $i & 0xffffffff;
         }
     }
 
@@ -101,7 +103,7 @@ class MT19937Engine extends AbstractEngine
     private function nextSeed()
     {
         for ($i = 0, $l = self::N - self::M; $i < $l; $i++) {
-            $this->state[$i] = $this->twist(
+            $this->state[$i] = Bits::twist(
                 $this->state[$i + self::M],
                 $this->state[$i],
                 $this->state[$i + 1]
@@ -109,14 +111,14 @@ class MT19937Engine extends AbstractEngine
         }
 
         for ($l = self::N - 1; $i < $l; $i++) {
-            $this->state[$i] = $this->twist(
+            $this->state[$i] = Bits::twist(
                 $this->state[$i + self::M - self::N],
                 $this->state[$i],
                 $this->state[$i + 1]
             );
         }
 
-        $this->state[$i] = $this->twist(
+        $this->state[$i] = Bits::twist(
             $this->state[$i + self::M - self::N],
             $this->state[$i],
             $this->state[0]
@@ -125,48 +127,5 @@ class MT19937Engine extends AbstractEngine
         $this->left = self::N;
 
         $this->state->rewind();
-    }
-
-    /**
-     * @param integer $m
-     * @param integer $u
-     * @param integer $v
-     * @return integer
-     */
-    private function twist($m, $u, $v)
-    {
-        return ($m ^ $this->shiftR(($u & 0x80000000) | ($v & 0x7FFFFFFF), 1)
-                   ^ -($u & 0x00000001) & 0x9908B0DF);
-    }
-
-    /**
-     * @param integer $x
-     * @param integer $y
-     * @return integer
-     */
-    private function multiply($x, $y)
-    {
-        $result = 0;
-
-        while ($y != 0) {
-            if ($y & 1) {
-                $result += $x;
-            }
-
-            $x = $x << 1;
-            $y = $this->shiftR($y, 1);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param integer $x
-     * @param integer $i
-     * @return integer
-     */
-    private function shiftR($x, $i)
-    {
-        return $x >> $i & ~(~0 << (32 - $i));
     }
 }

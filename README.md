@@ -49,9 +49,6 @@ $distribution->generate($engine);
 	// Also, the initial seed algorithm is full-compatible to the built-in `mt_srand()`
 	$engine = new MT19937Engine(/* $seed */);
 
-	// Reset the seed.
-	$engine->seed(1234);
-
 	// Get a next random number from the current generator state.
 	$number = $engine->next();  // as int
 	$number = $engine->nextDouble();  // as float

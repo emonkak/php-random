@@ -12,10 +12,10 @@ namespace Emonkak\Random\Engine;
 class MinstdRand0Engine extends LinearCongruentialEngine
 {
     /**
-     * @param integer $s
+     * @param integer $x The seed number
      */
-    public function __construct($s = self::DEFAULT_SEED)
+    public function __construct($x)
     {
-        parent::__construct(16807, 0, 2147483647, $s);
+        parent::__construct(16807, 0, 2147483647, $x);
     }
 }

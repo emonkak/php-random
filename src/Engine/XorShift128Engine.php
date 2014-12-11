@@ -9,6 +9,8 @@
 
 namespace Emonkak\Random\Engine;
 
+use Emonkak\Random\Util\Bits;
+
 class XorShift128Engine extends AbstractEngine
 {
     const X = 123456789;
@@ -37,18 +39,31 @@ class XorShift128Engine extends AbstractEngine
     private $w;
 
     /**
-     * @param integer|null $seed
+     * @param integer $seed The seed number
      */
-    public function __construct($seed = null)
+    public static function of($seed)
     {
-        if ($seed !== null) {
-            $this->seed($seed);
-        } else {
-            $this->x = self::X;
-            $this->y = self::Y;
-            $this->z = self::Z;
-            $this->w = self::W;
-        }
+        // https://gist.github.com/gintenlabo/604721
+        return new XorShift128Engine(
+            self::X ^  $seed                                  & 0xffffffff,
+            self::Y ^ ($seed << 17) | Bits::shiftR($seed, 15) & 0xffffffff,
+            self::Z ^ ($seed << 31) | Bits::shiftR($seed,  1) & 0xffffffff,
+            self::W ^ ($seed << 18) | Bits::shiftR($seed, 14) & 0xffffffff
+        );
+    }
+
+    /**
+     * @param integer $x The first seed
+     * @param integer $y The sedond seed
+     * @param integer $z The third seed
+     * @param integer $w The fourth seed
+     */
+    public function __construct($x, $y, $z, $w)
+    {
+        $this->x = $x;
+        $this->y = $y;
+        $this->z = $z;
+        $this->w = $w;
     }
 
     /**
@@ -77,31 +92,9 @@ class XorShift128Engine extends AbstractEngine
         $this->x = $this->y;
         $this->y = $this->z;
         $this->z = $this->w;
-        $this->w = ($this->w ^ $this->shiftR($this->w, 19) ^ ($t ^ $this->shiftR($t, 8))) & 0xffffffff;
+        $this->w = ($this->w ^ Bits::shiftR($this->w, 19) ^ ($t ^ Bits::shiftR($t, 8))) & 0xffffffff;
 
         // Kill the sign bit for 32bit systems.
         return $this->w & 0x7fffffff;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function seed($seed)
-    {
-        // https://gist.github.com/gintenlabo/604721
-        $this->x = self::X ^  $seed                                   & 0xffffffff;
-        $this->y = self::Y ^ ($seed << 17) | $this->shiftR($seed, 15) & 0xffffffff;
-        $this->z = self::Z ^ ($seed << 31) | $this->shiftR($seed,  1) & 0xffffffff;
-        $this->w = self::W ^ ($seed << 18) | $this->shiftR($seed, 14) & 0xffffffff;
-    }
-
-    /**
-     * @param integer $x
-     * @param integer $i
-     * @return integer
-     */
-    private function shiftR($x, $i)
-    {
-        return $x >> $i & ~(~0 << (32 - $i));
     }
 }
