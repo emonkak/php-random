@@ -19,8 +19,8 @@ MIT Licence
 ## Example
 
 ```php
-use Random\Engine\MT19937Engine;
-use Random\Distribution\NormalDistribution;
+use Emonkak\Random\Engine\MT19937Engine;
+use Emonkak\Random\Distribution\NormalDistribution;
 
 $seed = 100;  // Initial seed
 $engine = new MT19937Engine($seed);  // 32bit Mersenne Twister engine
