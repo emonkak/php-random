@@ -21,7 +21,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Emonkak\\Random\\": "src/",
+            "Emonkak\\Random\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Emonkak\\Random\\Tests\\": "tests/"
         }
     }
