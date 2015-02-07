@@ -41,13 +41,17 @@ class MTRandWrapperTest extends \PHPUnit_Framework_TestCase
 
     public function testGetIterator()
     {
-        $engine = new MTRandWrapper(1234);
+        mt_srand(1234);
+
+        $engine = new MTRandWrapper();
         $xs = iterator_to_array(
             new \LimitIterator($engine->getIterator(), 0, 100),
             false
         );
 
-        $engine = new MTRandWrapper(1234);
+        mt_srand(1234);
+
+        $engine = new MTRandWrapper();
         $ys = iterator_to_array(
             new \LimitIterator($engine->getIterator(), 0, 100),
             false

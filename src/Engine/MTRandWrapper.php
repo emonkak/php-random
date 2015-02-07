@@ -11,13 +11,6 @@ namespace Emonkak\Random\Engine;
 
 class MTRandWrapper extends AbstractEngine
 {
-    public function __construct($seed = null)
-    {
-        if ($seed !== null) {
-            mt_srand($seed);
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
