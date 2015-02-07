@@ -36,7 +36,7 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
      */
     public function testNext($seed)
     {
-        $engine = XorShift128Engine::of($seed);
+        $engine = XorShift128Engine::from($seed);
 
         for ($i = self::NUMBER_OF_TRIALS; $i--;) {
             $n = $engine->next();
@@ -51,7 +51,7 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
      */
     public function testNextDouble($seed)
     {
-        $engine = XorShift128Engine::of($seed);
+        $engine = XorShift128Engine::from($seed);
 
         for ($i = self::NUMBER_OF_TRIALS; $i--;) {
             $n = $engine->nextDouble();

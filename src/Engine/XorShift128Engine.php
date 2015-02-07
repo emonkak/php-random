@@ -39,9 +39,9 @@ class XorShift128Engine extends AbstractEngine
     private $w;
 
     /**
-     * @param integer $seed The seed number
+     * @param integer $seed The initial seed
      */
-    public static function of($seed)
+    public static function from($seed)
     {
         // https://gist.github.com/gintenlabo/604721
         return new XorShift128Engine(
