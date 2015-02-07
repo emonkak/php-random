@@ -32,17 +32,20 @@ class MT19937Engine extends AbstractEngine
     private $left = 0;
 
     /**
-     * @param integer|null Initial seed
+     * @return MT19937Engine
      */
-    public function __construct($seed = null)
+    public static function create()
+    {
+        return new self((time() * getmypid()) ^ (1000000.0 * lcg_value()));
+    }
+
+    /**
+     * @param integer The initial seed
+     */
+    public function __construct($seed)
     {
         $this->state = new \SplFixedArray(self::N + 1);
-
-        if ($seed !== null) {
-            $this->seed($seed);
-        } else {
-            $this->seed(time() * getmypid()) ^ (1000000.0 * lcg_value());
-        }
+        $this->seed($seed);
     }
 
     /**

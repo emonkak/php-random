@@ -18,14 +18,14 @@ class MT19937EngineTest extends \PHPUnit_Framework_TestCase
 
     public function testMax()
     {
-        $engine = new MT19937Engine();
+        $engine = MT19937Engine::create();
 
         $this->assertSame(mt_getrandmax(), $engine->max());
     }
 
     public function testMin()
     {
-        $engine = new MT19937Engine();
+        $engine = MT19937Engine::create();
 
         $this->assertSame(0, $engine->min());
     }
