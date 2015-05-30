@@ -75,18 +75,28 @@ class MT19937Engine extends AbstractEngine
 
         $this->left--;
 
-        $s1 = $this->state->current();
-        $s1 ^= Bits::shiftR($s1, 11);
-        $s1 ^= ($s1 <<  7) & 0x9d2c5680;
-        $s1 ^= ($s1 << 15) & 0xefc60000;
+        $s1 = $this->tempering($this->state->current());
 
         $this->state->next();
 
-        return Bits::shiftR($s1 ^ Bits::shiftR($s1, 18), 1);
+        return $s1;
     }
 
     /**
-     * {@inheritdoc}
+     * @param integer $x
+     * @return integer
+     */
+    private function tempering($x)
+    {
+        $x ^= Bits::shiftR($x, 11);
+        $x ^= ($x <<  7) & 0x9d2c5680;
+        $x ^= ($x << 15) & 0xefc60000;
+        $x ^= Bits::shiftR($x, 18);
+        return Bits::shiftR($x, 1);
+    }
+
+    /**
+     * @param integer $seed
      */
     private function seed($seed)
     {
