@@ -9,7 +9,7 @@
 
 namespace Emonkak\Random\Engine;
 
-use Emonkak\Random\Util\Bits;
+use Emonkak\Random\Utils\BitUtils;
 
 class MT19937Engine extends AbstractEngine
 {
@@ -29,7 +29,7 @@ class MT19937Engine extends AbstractEngine
     /**
      * @var integer
      */
-    private $left = 0;
+    private $remains = 0;
 
     /**
      * @return MT19937Engine
@@ -69,11 +69,11 @@ class MT19937Engine extends AbstractEngine
      */
     public function next()
     {
-        if ($this->left === 0) {
+        if ($this->remains === 0) {
             $this->nextSeed();
         }
 
-        $this->left--;
+        $this->remains--;
 
         $s1 = $this->tempering($this->state->current());
 
@@ -88,11 +88,11 @@ class MT19937Engine extends AbstractEngine
      */
     private function tempering($x)
     {
-        $x ^= Bits::shiftR($x, 11);
+        $x ^= BitUtils::shiftR($x, 11);
         $x ^= ($x <<  7) & 0x9d2c5680;
         $x ^= ($x << 15) & 0xefc60000;
-        $x ^= Bits::shiftR($x, 18);
-        return Bits::shiftR($x, 1);
+        $x ^= BitUtils::shiftR($x, 18);
+        return BitUtils::shiftR($x, 1);
     }
 
     /**
@@ -105,8 +105,8 @@ class MT19937Engine extends AbstractEngine
         for ($i = 1; $i < self::N; $i++) {
             $r = $this->state[$i - 1];
             $this->state[$i] =
-                Bits::multiply(1812433253,
-                               $r ^ Bits::shiftR($r, 30)) + $i & 0xffffffff;
+                BitUtils::multiply(1812433253,
+                                   $r ^ BitUtils::shiftR($r, 30)) + $i & 0xffffffff;
         }
     }
 
@@ -116,7 +116,7 @@ class MT19937Engine extends AbstractEngine
     private function nextSeed()
     {
         for ($i = 0, $l = self::N - self::M; $i < $l; $i++) {
-            $this->state[$i] = Bits::twist(
+            $this->state[$i] = BitUtils::twist(
                 $this->state[$i + self::M],
                 $this->state[$i],
                 $this->state[$i + 1]
@@ -124,20 +124,20 @@ class MT19937Engine extends AbstractEngine
         }
 
         for ($l = self::N - 1; $i < $l; $i++) {
-            $this->state[$i] = Bits::twist(
+            $this->state[$i] = BitUtils::twist(
                 $this->state[$i + self::M - self::N],
                 $this->state[$i],
                 $this->state[$i + 1]
             );
         }
 
-        $this->state[$i] = Bits::twist(
+        $this->state[$i] = BitUtils::twist(
             $this->state[$i + self::M - self::N],
             $this->state[$i],
             $this->state[0]
         );
 
-        $this->left = self::N;
+        $this->remains = self::N;
 
         $this->state->rewind();
     }

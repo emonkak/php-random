@@ -1,9 +1,12 @@
 <?php
 
-namespace Emonkak\Random\Util;
+namespace Emonkak\Random\Utils;
 
-class Bits
+class BitUtils
 {
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
     }
