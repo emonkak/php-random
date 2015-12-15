@@ -1,4 +1,4 @@
-# emonkak/random
+# Emonkak\Random
 
 [![Build Status](https://travis-ci.org/emonkak/php-random.png)](https://travis-ci.org/emonkak/php-random)
 [![Coverage Status](https://coveralls.io/repos/emonkak/php-random/badge.png)](https://coveralls.io/r/emonkak/php-random)
