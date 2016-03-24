@@ -3,14 +3,11 @@
 [![Build Status](https://travis-ci.org/emonkak/php-random.png)](https://travis-ci.org/emonkak/php-random)
 [![Coverage Status](https://coveralls.io/repos/emonkak/php-random/badge.png)](https://coveralls.io/r/emonkak/php-random)
 
-Random.php is a random number library.
-
-It provides pseudo-random number generators and probability distributions.
+This library provides pseudo-random number generators and probability distributions.
 
 ## Requirements
 
 - PHP 5.3 or higher
-- [Composer](http://getcomposer.org/)
 
 ## Licence
 

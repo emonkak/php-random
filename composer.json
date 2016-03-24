@@ -1,8 +1,6 @@
 {
     "name": "emonkak/random",
-    "description": "A random number library",
-    "version": "0.0.0",
-    "type": "library",
+    "description": "A random number generator library",
     "keywords": ["random"],
     "homepage": "https://github.com/emonkak/php-random",
     "license": "MIT",
