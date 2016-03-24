@@ -54,6 +54,6 @@ class DiscreteDistribution extends AbstractDistribution
             }
         }
 
-        throw new \LogicException('Number generation is not possible.');
+        throw new \LogicException("Can't generate the random number. Please confirm the probabilities.");
     }
 }
