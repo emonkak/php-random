@@ -28,7 +28,7 @@ class PiecewiseConstantDistributionTest extends AbstractDistributionTestCase
     {
         $intervals = array(0.0, 1.0, 10.0);
         $densities = array(1.0, 0.0);
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 999);
         $distribution = new PiecewiseConstantDistribution($intervals, $densities);
 
         for ($i = 500; $i--;) {

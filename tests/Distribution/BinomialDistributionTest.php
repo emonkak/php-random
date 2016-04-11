@@ -22,7 +22,7 @@ class BinomialDistributionTest extends AbstractDistributionTestCase
 
     public function testGenerate()
     {
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 99);
         $distribution = new BinomialDistribution(10, 1);
 
         for ($i = 100; $i--;) {

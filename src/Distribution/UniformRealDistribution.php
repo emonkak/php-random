@@ -22,6 +22,8 @@ class UniformRealDistribution extends AbstractDistribution
      */
     public function __construct($min, $max)
     {
+        assert($min < $max);
+
         $this->min = $min;
         $this->max = $max;
     }

@@ -24,7 +24,7 @@ class NormalDistributionTest extends AbstractDistributionTestCase
     {
         $mean = 0;
         $sigma = 1;
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 99);
         $distribution = new NormalDistribution($mean, $sigma);
 
         for ($i = 100; $i--;) {

@@ -6,7 +6,7 @@ class AbstractDistributionTest extends AbstractDistributionTestCase
 {
     public function testIterate()
     {
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 9);
         $distribution =
             $this->getMockForAbstractClass('Emonkak\Random\\Distribution\\AbstractDistribution');
         $distribution
@@ -32,7 +32,7 @@ class AbstractDistributionTest extends AbstractDistributionTestCase
 
     public function testInvoke()
     {
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 9);
         $distribution =
             $this->getMockForAbstractClass('Emonkak\Random\\Distribution\\AbstractDistribution');
         $distribution
