@@ -5,6 +5,7 @@ namespace Emonkak\Random\Engine;
 abstract class AbstractEngine implements \IteratorAggregate
 {
     const DBL_MANT_DIG = 53;
+    const DBL_EPSILON = 2.2204460492503131e-16;
 
     /**
      * @return mixed
@@ -65,19 +66,19 @@ abstract class AbstractEngine implements \IteratorAggregate
     {
         $max = $this->max();
         $min = $this->min();
-
-        $logR = log($max + $min + 1, 2);
-
-        $k = self::DBL_MANT_DIG / $logR + (self::DBL_MANT_DIG % $logR != 0);
-        $rp = $max - $min + 1;
-
-        $base = $rp;
-        $sp = $this->next() - $min;
-
-        for ($i = 1; $i < $k; ++$i, $base *= $rp) {
-            $sp += ($this->next() - $min) * $base;
+        $b = self::DBL_MANT_DIG;
+        $r = $max - $min + 1;
+        $mult = $r;
+        $limit = pow(2, $b);
+        $s = $this->next() - $min;
+        while ($mult < $limit) {
+            $s += ($this->next() - $min) * $mult;
+            $mult *= $r;
         }
-
-        return $sp / $base;
+        $result = $s / $mult;
+        if ($result == 1) {
+            $result -= self::DBL_EPSILON / 2;
+        }
+        return $result;
     }
 }
