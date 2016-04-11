@@ -29,7 +29,7 @@ class DircreteDistributionTest extends AbstractDistributionTestCase
             4 => 25,
         );
 
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 99);
         $distribution = new DiscreteDistribution($probabilities);
 
         $seenIndexes = array();
@@ -53,22 +53,11 @@ class DircreteDistributionTest extends AbstractDistributionTestCase
             4 => 0,
         );
 
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 99);
         $distribution = new DiscreteDistribution($probabilities);
 
         for ($i = 0; $i < 100; $i++) {
             $this->assertSame(1, $distribution->generate($engine));
         }
-    }
-
-    /**
-     * @expectedException LogicException
-     */
-    public function testGenerateWithNegativeProbability()
-    {
-        $engine = $this->createEngineMock();
-        $distribution = new DiscreteDistribution(array(-1));
-
-        $this->assertNull($distribution->generate($engine));
     }
 }

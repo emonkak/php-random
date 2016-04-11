@@ -15,21 +15,21 @@ class BernoulliDistributionTest extends AbstractDistributionTestCase
 
     public function testGenerateItAlwaysTrue()
     {
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 99);
         $distribution = new BernoulliDistribution(1.0);
 
         for ($i = 100; $i--;) {
-            $this->assertTrue($distribution->generate($engine));
+            $this->assertTrue($distribution->generate($engine), $i);
         }
     }
 
     public function testGenerateItAlwaysFalse()
     {
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 99);
         $distribution = new BernoulliDistribution(0.0);
 
         for ($i = 100; $i--;) {
-            $this->assertFalse($distribution->generate($engine));
+            $this->assertFalse($distribution->generate($engine), $i);
         }
     }
 }

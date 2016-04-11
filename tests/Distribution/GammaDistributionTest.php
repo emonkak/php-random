@@ -22,7 +22,7 @@ class GammaDistributionTest extends AbstractDistributionTestCase
 
     public function testGenerate()
     {
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 74);
         $distribution = new GammaDistribution(1.0, 1.0);
 
         for ($i = 25; $i--;) {

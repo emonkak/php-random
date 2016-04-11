@@ -27,7 +27,7 @@ class PiecewiseLinerDistributionTest extends AbstractDistributionTestCase
     {
         $intervals = array(0, 5, 10, 15);
         $densities = array(0, 1,  1,  0);
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 99);
         $distribution = new PiecewiseLinerDistribution($intervals, $densities);
 
         for ($i = 100; $i--;) {

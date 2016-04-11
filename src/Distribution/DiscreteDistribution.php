@@ -39,7 +39,6 @@ class DiscreteDistribution extends AbstractDistribution
 
     /**
      * {@inheritdoc}
-     * @throws LogicException
      */
     public function generate(AbstractEngine $engine)
     {

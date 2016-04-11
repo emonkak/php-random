@@ -22,7 +22,7 @@ class UnniformIntDistributionTest extends AbstractDistributionTestCase
 
     public function testGenerate()
     {
-        $engine = $this->createEngineMock();
+        $engine = $this->createEngineMock(0, 99);
         $distribution = new UniformIntDistribution(0, 10);
 
         for ($i = 100; $i--;) {

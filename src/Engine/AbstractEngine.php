@@ -55,12 +55,12 @@ abstract class AbstractEngine implements \IteratorAggregate
     abstract public function next();
 
     /**
-     * Returns a random number of between 0.0 and 1.0.
+     * Returns a random number that is greater than or equal to 0 and less than 1.
      *
      * @return float
      */
     public function nextDouble()
     {
-        return $this->next() / ($this->max() - $this->min());
+        return $this->next() / ($this->max() - $this->min() + 1);
     }
 }
