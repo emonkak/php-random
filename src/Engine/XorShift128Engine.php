@@ -2,8 +2,6 @@
 
 namespace Emonkak\Random\Engine;
 
-use Emonkak\Random\Utils\BitUtils;
-
 class XorShift128Engine extends AbstractEngine
 {
     const X = 123456789;
@@ -38,10 +36,10 @@ class XorShift128Engine extends AbstractEngine
     {
         // https://gist.github.com/gintenlabo/604721
         return new XorShift128Engine(
-            self::X ^  $seed                                      & 0xffffffff,
-            self::Y ^ ($seed << 17) | BitUtils::shiftR($seed, 15) & 0xffffffff,
-            self::Z ^ ($seed << 31) | BitUtils::shiftR($seed,  1) & 0xffffffff,
-            self::W ^ ($seed << 18) | BitUtils::shiftR($seed, 14) & 0xffffffff
+            self::X ^  $seed                                       & 0xffffffff,
+            self::Y ^ ($seed << 17) | (($seed >> 15) & 0x7fffffff) & 0xffffffff,
+            self::Z ^ ($seed << 31) | (($seed >>  1) & 0x7fffffff) & 0xffffffff,
+            self::W ^ ($seed << 18) | (($seed >> 14) & 0x7fffffff) & 0xffffffff
         );
     }
 
@@ -85,7 +83,8 @@ class XorShift128Engine extends AbstractEngine
         $this->x = $this->y;
         $this->y = $this->z;
         $this->z = $this->w;
-        $this->w = ($this->w ^ BitUtils::shiftR($this->w, 19) ^ ($t ^ BitUtils::shiftR($t, 8))) & 0xffffffff;
+        $this->w = ($this->w ^ (($this->w >> 19) & 0x7fffffff)
+                             ^ ($t ^ (($t >> 8) & 0x7fffffff))) & 0xffffffff;
 
         // Kill the sign bit for 32bit systems.
         return $this->w & 0x7fffffff;
