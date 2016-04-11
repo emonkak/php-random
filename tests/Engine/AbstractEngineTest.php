@@ -49,7 +49,7 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
         $engine
             ->expects($this->any())
             ->method('max')
-            ->will($this->returnValue(100));
+            ->will($this->returnValue(99));
         $engine
             ->expects($this->any())
             ->method('min')
@@ -57,9 +57,12 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
         $engine
             ->expects($this->any())
             ->method('next')
-            ->will($this->onConsecutiveCalls(0, 100));
+            ->will(call_user_func_array(array($this, 'onConsecutiveCalls'), range(0, 99)));
 
-        $this->assertEquals(0.0, $engine->nextDouble());
-        $this->assertEquals(1.0, $engine->nextDouble(), '', 0.1);
+        for ($i = 100; $i--;) {
+            $result = $engine->nextDouble();
+            $this->assertGreaterThanOrEqual(0.0, $result);
+            $this->assertLessThan(1,0, $result);
+        }
     }
 }

@@ -4,6 +4,8 @@ namespace Emonkak\Random\Engine;
 
 abstract class AbstractEngine implements \IteratorAggregate
 {
+    const DBL_MANT_DIG = 53;
+
     /**
      * @return mixed
      */
@@ -61,6 +63,21 @@ abstract class AbstractEngine implements \IteratorAggregate
      */
     public function nextDouble()
     {
-        return $this->next() / ($this->max() - $this->min() + 1);
+        $max = $this->max();
+        $min = $this->min();
+
+        $logR = log($max + $min + 1, 2);
+
+        $k = self::DBL_MANT_DIG / $logR + (self::DBL_MANT_DIG % $logR != 0);
+        $rp = $max - $min + 1;
+
+        $base = $rp;
+        $sp = $this->next() - $min;
+
+        for ($i = 1; $i < $k; ++$i, $base *= $rp) {
+            $sp += ($this->next() - $min) * $base;
+        }
+
+        return $sp / $base;
     }
 }
