@@ -50,10 +50,16 @@ class BinomialDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
+        if ($this->p == 0) {
+            return 0;
+        }
+
         $success = 0;
+        $min = $engine->min();
+        $max = $engine->max();
 
         for ($i = 0; $i < $this->t; ++$i) {
-            if ($engine->nextDouble() < $this->p) {
+            if (($engine->next() - $min) <= $this->p * ($max - $min)) {
                 $success++;
             }
         }

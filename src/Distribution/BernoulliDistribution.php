@@ -34,6 +34,11 @@ class BernoulliDistribution extends AbstractDistribution
      */
     public function generate(AbstractEngine $engine)
     {
-        return $engine->nextDouble() < $this->p;
+        if ($this->p == 0) {
+            return false;
+        }
+        $min = $engine->min();
+        $max = $engine->max();
+        return ($engine->next() - $min) <= $this->p * ($max - $min);
     }
 }
