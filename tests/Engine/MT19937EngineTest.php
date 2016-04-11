@@ -3,75 +3,55 @@
 namespace Emonkak\Random\Tests\Engine;
 
 use Emonkak\Random\Engine\MT19937Engine;
-use Emonkak\Random\Distribution\UniformIntDistribution;
 
 class MT19937EngineTest extends \PHPUnit_Framework_TestCase
 {
-    const SUPPLY_OF_SEED = 8;
-
     public function testMax()
     {
-        $engine = MT19937Engine::create();
+        $engine = new MT19937Engine(12345678);
 
         $this->assertSame(mt_getrandmax(), $engine->max());
     }
 
     public function testMin()
     {
-        $engine = MT19937Engine::create();
+        $engine = new MT19937Engine(12345678);
 
         $this->assertSame(0, $engine->min());
     }
 
-    /**
-     * @dataProvider seedProvider
-     */
-    public function testNext($seed)
+    public function testNext()
     {
-        $engine = new MT19937Engine($seed);
+        $engine = new MT19937Engine(12345678);
 
-        mt_srand($seed);
-
-        for ($i = MT19937Engine::N + 1; $i--;) {
-            $this->assertSame(mt_rand(), $engine->next());
-        }
-    }
-
-    /**
-     * @dataProvider seedProvider
-     */
-    public function testNextDouble($seed)
-    {
-        $engine = new MT19937Engine($seed);
-
-        for ($i = MT19937Engine::N + 1; $i--;) {
-            $n = $engine->nextDouble();
-
-            $this->assertGreaterThanOrEqual(0.0, $n);
-            $this->assertLessThan(1.0, $n);
-        }
-    }
-
-    /**
-     * @dataProvider seedProvider
-     */
-    public function testUniformIntDistribution($seed)
-    {
-        $engine = new MT19937Engine($seed);
-        $distribution = new UniformIntDistribution(0, 1234);
-
-        mt_srand($seed);
-
-        for ($i = MT19937Engine::N + 1; $i--;) {
-            $this->assertSame(mt_rand(0, 1234), $distribution->generate($engine));
-        }
-    }
-
-    public function seedProvider()
-    {
-        return array_map(
-            function($xs) { return array($xs); },
-            range(0, PHP_INT_MAX, (int) (PHP_INT_MAX / self::SUPPLY_OF_SEED))
+        $expectedResults = array(
+            527860569,
+            1711027313,
+            1280820687,
+            688176834,
+            770499160,
+            412773096,
+            813703253,
+            898651287,
+            52508912,
+            757323740,
+            511765911,
+            274407457,
+            833082629,
+            1923803667,
+            1461450755,
+            1301698200,
         );
+
+        foreach ($expectedResults as $expectedResult) {
+            $this->assertSame($expectedResult, $engine->next());
+        }
+
+        $x = 0;
+        for ($i = 0; $i < 1024; $i++) {
+            $x ^= $engine->next();
+        }
+
+        $this->assertSame(1612214270, $x);
     }
 }

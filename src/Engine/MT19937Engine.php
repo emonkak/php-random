@@ -2,6 +2,9 @@
 
 namespace Emonkak\Random\Engine;
 
+/**
+ * A Mersenne Twister pseudo-random generator of 32-bit numbers.
+ */
 class MT19937Engine extends AbstractEngine
 {
     const N = 624;
@@ -21,14 +24,6 @@ class MT19937Engine extends AbstractEngine
      * @var integer
      */
     private $remains = 0;
-
-    /**
-     * @return MT19937Engine
-     */
-    public static function create()
-    {
-        return new self((time() * getmypid()) ^ (1000000.0 * lcg_value()));
-    }
 
     /**
      * @param integer The initial seed
@@ -71,6 +66,18 @@ class MT19937Engine extends AbstractEngine
         $this->state->next();
 
         return $s1;
+    }
+
+    /**
+     * @param integer $m
+     * @param integer $u
+     * @param integer $v
+     * @return integer
+     */
+    protected function twist($m, $u, $v)
+    {
+        $y = ($u & 0x80000000) | ($v & 0x7fffffff);
+        return $m ^ (($y >> 1) & 0x7fffffff) ^ -($v & 0x00000001) & 0x9908b0df;
     }
 
     /**
@@ -137,17 +144,5 @@ class MT19937Engine extends AbstractEngine
         $x ^= ($x << 15) & 0xefc60000;
         $x ^= ($x >> 18) & 0x7fffffff;
         return ($x >> 1) & 0x7fffffff;
-    }
-
-    /**
-     * @param integer $m
-     * @param integer $u
-     * @param integer $v
-     * @return integer
-     */
-    private function twist($m, $u, $v)
-    {
-        $y = ($u & 0x80000000) | ($v & 0x7fffffff);
-        return $m ^ (($y >> 1) & 0x7fffffff) ^ -($u & 0x00000001) & 0x9908b0df;
     }
 }
