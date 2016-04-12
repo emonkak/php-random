@@ -13,7 +13,7 @@ class AbstractDistributionTest extends AbstractDistributionTestCase
             ->expects($this->any())
             ->method('generate')
             ->with($this->identicalTo($engine))
-            ->will($this->returnValue(1234));
+            ->willReturn(1234);
 
         $it = $distribution->iterate($engine);
 
@@ -39,7 +39,7 @@ class AbstractDistributionTest extends AbstractDistributionTestCase
             ->expects($this->any())
             ->method('generate')
             ->with($this->identicalTo($engine))
-            ->will($this->returnValue(1234));
+            ->willReturn(1234);
 
         $this->assertSame(1234, $distribution($engine));
     }

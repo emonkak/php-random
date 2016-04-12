@@ -11,7 +11,7 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
         $engine
             ->expects($this->any())
             ->method('next')
-            ->will($this->returnValue(1234));
+            ->willReturn(1234);
 
         $this->assertInstanceOf('IteratorAggregate', $engine);
 
@@ -37,7 +37,7 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
         $engine
             ->expects($this->any())
             ->method('next')
-            ->will($this->returnValue(1234));
+            ->willReturn(1234);
 
         $this->assertSame(1234, $engine());
     }
@@ -49,11 +49,11 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
         $engine
             ->expects($this->any())
             ->method('max')
-            ->will($this->returnValue(99));
+            ->willReturn(99);
         $engine
             ->expects($this->any())
             ->method('min')
-            ->will($this->returnValue(0));
+            ->willReturn(0);
         $engine
             ->expects($this->any())
             ->method('next')
@@ -62,7 +62,31 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
         for ($i = 100; $i--;) {
             $result = $engine->nextDouble();
             $this->assertGreaterThanOrEqual(0.0, $result);
-            $this->assertLessThan(1,0, $result);
+            $this->assertLessThan(1, $result);
+        }
+    }
+
+    public function testNextDoubleLopsided()
+    {
+        $engine =
+            $this->getMockForAbstractClass('Emonkak\Random\\Engine\\AbstractEngine');
+        $engine
+            ->expects($this->any())
+            ->method('max')
+            ->willReturn(99);
+        $engine
+            ->expects($this->any())
+            ->method('min')
+            ->willReturn(0);
+        $engine
+            ->expects($this->any())
+            ->method('next')
+            ->willReturn(99);
+
+        for ($i = 100; $i--;) {
+            $result = $engine->nextDouble();
+            $this->assertGreaterThanOrEqual(0.0, $result);
+            $this->assertLessThan(1, $result);
         }
     }
 }

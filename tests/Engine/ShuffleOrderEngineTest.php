@@ -19,7 +19,7 @@ class ShuffleOrderEngineTest extends \PHPUnit_Framework_TestCase
         $this->engine
             ->expects($this->once())
             ->method('max')
-            ->will($this->returnValue(PHP_INT_MAX));
+            ->willReturn(PHP_INT_MAX);
 
         $engine = new ShuffleOrderEngine($this->engine, 8);
 
@@ -31,7 +31,7 @@ class ShuffleOrderEngineTest extends \PHPUnit_Framework_TestCase
         $this->engine
             ->expects($this->once())
             ->method('min')
-            ->will($this->returnValue(0));
+            ->willReturn(0);
 
         $engine = new ShuffleOrderEngine($this->engine, 8);
 
@@ -43,11 +43,11 @@ class ShuffleOrderEngineTest extends \PHPUnit_Framework_TestCase
         $this->engine
             ->expects($this->any())
             ->method('max')
-            ->will($this->returnValue(4));
+            ->willReturn(4);
         $this->engine
             ->expects($this->any())
             ->method('min')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
         $this->engine
             ->expects($this->any())
             ->method('next')
