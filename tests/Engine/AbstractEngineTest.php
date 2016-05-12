@@ -48,12 +48,12 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
             $this->getMockForAbstractClass('Emonkak\Random\\Engine\\AbstractEngine');
         $engine
             ->expects($this->any())
-            ->method('max')
-            ->willReturn(99);
-        $engine
-            ->expects($this->any())
             ->method('min')
             ->willReturn(0);
+        $engine
+            ->expects($this->any())
+            ->method('max')
+            ->willReturn(99);
         $engine
             ->expects($this->any())
             ->method('next')
@@ -66,18 +66,18 @@ class AbstractEngineTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testNextDoubleLopsided()
+    public function testNextDoubleBiased()
     {
         $engine =
             $this->getMockForAbstractClass('Emonkak\Random\\Engine\\AbstractEngine');
         $engine
             ->expects($this->any())
-            ->method('max')
-            ->willReturn(99);
-        $engine
-            ->expects($this->any())
             ->method('min')
             ->willReturn(0);
+        $engine
+            ->expects($this->any())
+            ->method('max')
+            ->willReturn(99);
         $engine
             ->expects($this->any())
             ->method('next')

@@ -48,11 +48,11 @@ class DiscreteDistribution extends AbstractDistribution
         foreach ($this->probabilities as $key => $probability) {
             $sum += $probability;
 
-            if ($result <= $sum) {
+            if ($probability > 0 && $result <= $sum) {
                 return $key;
             }
         }
 
-        throw new \LogicException("Can't generate the random number. Please confirm the probabilities.");
+        throw new \LogicException("Can't generate the random number. Confirm the probabilities.");
     }
 }
