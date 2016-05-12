@@ -47,13 +47,12 @@ class DircreteDistributionTest extends AbstractDistributionTestCase
     public function testGenerateInequally()
     {
         $probabilities = array(
+            0 => 0,
             1 => 100,
-            2 => 0,
-            3 => 0,
-            4 => 0,
+            2 => 100,
         );
 
-        $engine = $this->createEngineMock(0, 99);
+        $engine = $this->createBiasedEngineMock(0, 99, 0);
         $distribution = new DiscreteDistribution($probabilities);
 
         for ($i = 0; $i < 100; $i++) {

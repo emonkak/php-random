@@ -10,9 +10,11 @@ class EngineMock extends AbstractEngine
 
     private $max;
 
+    private $n;
+
     public function __construct($min, $max)
     {
-        $this->i = $min;
+        $this->n = $min;
         $this->min = $min;
         $this->max = $max;
     }
@@ -29,6 +31,8 @@ class EngineMock extends AbstractEngine
 
     public function next()
     {
-        return $this->i = $this->i === $this->max ? $this->min : $this->i + 1;
+        $n = $this->n;
+        $this->n = $this->n === $this->max ? $this->min : $this->n + 1;
+        return $n;
     }
 }
