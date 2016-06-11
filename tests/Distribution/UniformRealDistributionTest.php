@@ -30,7 +30,7 @@ class UnniformRealDistributionTest extends AbstractDistributionTestCase
 
             $this->assertInternalType('float', $n);
             $this->assertGreaterThanOrEqual(0.0, $n);
-            $this->assertLessThanOrEqual(10.0, $n);
+            $this->assertLessThan(10.0, $n);
         }
     }
 }
