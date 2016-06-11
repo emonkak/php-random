@@ -11,12 +11,14 @@ class RandomDeviceTest extends \PHPUnit_Framework_TestCase
 {
     public function testMax()
     {
-        return $this->assertSame(0x7fffffff, (new RandomDevice())->max());
+        $engine = new RandomDevice();
+        return $this->assertSame(0x7fffffff, $engine->max());
     }
 
     public function testMin()
     {
-        return $this->assertSame(0, (new RandomDevice())->min());
+        $engine = new RandomDevice();
+        return $this->assertSame(0, $engine->min());
     }
 
     public function testNext()
