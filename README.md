@@ -1,7 +1,7 @@
 # Emonkak\Random
 
-[![Build Status](https://travis-ci.org/emonkak/php-random.png)](https://travis-ci.org/emonkak/php-random)
-[![Coverage Status](https://coveralls.io/repos/emonkak/php-random/badge.png)](https://coveralls.io/r/emonkak/php-random)
+[![Build Status](https://travis-ci.org/emonkak/php-random.svg?branch=master)](https://travis-ci.org/emonkak/php-random)
+[![Coverage Status](https://coveralls.io/repos/github/emonkak/php-random/badge.svg?branch=master)](https://coveralls.io/github/emonkak/php-random?branch=master)
 
 This library provides pseudo-random number generators and probability distributions.
 
