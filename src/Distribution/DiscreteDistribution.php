@@ -17,16 +17,21 @@ class DiscreteDistribution extends AbstractDistribution
     private $uniform;
 
     /**
-     * @param float[] $probabilities
+     * @param iterable $probabilities
      */
-    public function __construct(array $probabilities)
+    public function __construct($probabilities)
     {
         assert(!empty($probabilities));
 
+        $totalProbability = 0;
+
+        foreach ($probabilities as $probability) {
+            $totalProbability += $probability;
+        }
+
         // TODO: Use alias table
         $this->probabilities = $probabilities;
-        $this->uniform =
-            new UniformRealDistribution(0, array_sum($probabilities));
+        $this->uniform = new UniformRealDistribution(0, $totalProbability);
     }
 
     /**
