@@ -1,35 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Engine;
 
 class RandomDevice extends AbstractEngine
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function max()
-    {
-        return 0x7fffffff;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function min()
+    public function min(): int
     {
         return 0;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function next()
+    public function max(): int
     {
-        $bytes = function_exists('random_bytes') ? random_bytes(4) : mcrypt_create_iv(4, MCRYPT_DEV_URANDOM);
-        if ($bytes === false || strlen($bytes) !== 4) {
-            throw new RuntimeException('Unable to get 4 bytes');
+        return 0x7fffffff;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next(): int
+    {
+        $bytes = random_bytes(4);
+        if (strlen($bytes) !== 4) {
+            // @codeCoverageIgnoreStart
+            throw new \RuntimeException('Unable to get random bytes.');
+            // @codeCoverageIgnoreEnd
         }
         $array = unpack('Nint', $bytes);
-        return $array['int'] & 0x7FFFFFFF;   // 32-bit safe
+        return $array['int'] & 0x7FFFFFFF;   // 32-bit mask
     }
 }

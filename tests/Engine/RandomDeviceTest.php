@@ -1,27 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Engine;
 
 use Emonkak\Random\Engine\RandomDevice;
+use PHPUnit\Framework\TestCase;
 
 /**
- * @requires extension mcrypt
+ * @covers \Emonkak\Random\Engine\RandomDevice
  */
-class RandomDeviceTest extends \PHPUnit_Framework_TestCase
+class RandomDeviceTest extends TestCase
 {
-    public function testMax()
+    public function testMin(): void
     {
         $engine = new RandomDevice();
-        return $this->assertSame(0x7fffffff, $engine->max());
+        $this->assertSame(0, $engine->min());
     }
 
-    public function testMin()
+    public function testMax(): void
     {
         $engine = new RandomDevice();
-        return $this->assertSame(0, $engine->min());
+        $this->assertSame(0x7fffffff, $engine->max());
     }
 
-    public function testNext()
+    public function testNext(): void
     {
         $engine = new RandomDevice();
 

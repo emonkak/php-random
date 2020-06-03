@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Engine;
 
 class XorShift128Engine extends AbstractEngine
@@ -10,46 +12,37 @@ class XorShift128Engine extends AbstractEngine
     const W = 88675123;
 
     /**
-     * @var integer
+     * @var int
      */
     private $x;
 
     /**
-     * @var integer
+     * @var int
      */
     private $y;
 
     /**
-     * @var integer
+     * @var int
      */
     private $z;
 
     /**
-     * @var integer
+     * @var int
      */
     private $w;
 
-    /**
-     * @param integer $seed The initial seed
-     */
-    public static function from($seed)
+    public static function from(int $seed): self
     {
         // https://gist.github.com/gintenlabo/604721
         return new XorShift128Engine(
-            self::X ^  $seed                                       & 0xffffffff,
+            self::X ^ $seed & 0xffffffff,
             self::Y ^ ($seed << 17) | (($seed >> 15) & 0x7fffffff) & 0xffffffff,
-            self::Z ^ ($seed << 31) | (($seed >>  1) & 0x7fffffff) & 0xffffffff,
+            self::Z ^ ($seed << 31) | (($seed >> 1) & 0x7fffffff) & 0xffffffff,
             self::W ^ ($seed << 18) | (($seed >> 14) & 0x7fffffff) & 0xffffffff
         );
     }
 
-    /**
-     * @param integer $x The first seed
-     * @param integer $y The sedond seed
-     * @param integer $z The third seed
-     * @param integer $w The fourth seed
-     */
-    public function __construct($x, $y, $z, $w)
+    public function __construct(int $x, int $y, int $z, int $w)
     {
         $this->x = $x;
         $this->y = $y;
@@ -60,15 +53,7 @@ class XorShift128Engine extends AbstractEngine
     /**
      * {@inheritdoc}
      */
-    public function max()
-    {
-        return 0x7fffffff;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function min()
+    public function min(): int
     {
         return 0;
     }
@@ -76,7 +61,15 @@ class XorShift128Engine extends AbstractEngine
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function max(): int
+    {
+        return 0x7fffffff;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next(): int
     {
         $t = ($this->x ^ ($this->x << 11)) & 0xffffffff;
 

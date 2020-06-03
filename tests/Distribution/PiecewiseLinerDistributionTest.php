@@ -1,36 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Distribution;
 
 use Emonkak\Random\Distribution\PiecewiseLinerDistribution;
+use PHPUnit\Framework\TestCase;
 
-class PiecewiseLinerDistributionTest extends AbstractDistributionTestCase
+class PiecewiseLinerDistributionTest extends TestCase
 {
-    public function testGetIntervals()
+    use DistributionTestTrait;
+
+    public function testConstructor(): void
     {
-        $intervals = array(0, 5, 10, 15);
-        $densities = array(0, 1,  1,  0);
+        $intervals = [0, 5, 10, 15];
+        $densities = [0, 1,  1,  0];
         $distribution = new PiecewiseLinerDistribution($intervals, $densities);
 
         $this->assertSame($intervals, $distribution->getIntervals());
-    }
-
-    public function testGetDensities()
-    {
-        $intervals = array(0, 5, 10, 15);
-        $densities = array(0, 1,  1,  0);
-        $distribution = new PiecewiseLinerDistribution($intervals, $densities);
-
         $this->assertSame($densities, $distribution->getDensities());
     }
-    public function testGenerate()
+
+    public function testGenerate(): void
     {
-        $intervals = array(0, 5, 10, 15);
-        $densities = array(0, 1,  1,  0);
-        $engine = $this->createEngineMock(0, 99);
+        $intervals = [0, 5, 10, 15];
+        $densities = [0, 1,  1,  0];
+        $engine = $this->createIncrementalEngineMock(0, 99);
         $distribution = new PiecewiseLinerDistribution($intervals, $densities);
 
-        for ($i = 100; $i--;) {
+        for ($i = 0; $i < 100; $i++) {
             $n = $distribution->generate($engine);
 
             $this->assertInternalType('float', $n);

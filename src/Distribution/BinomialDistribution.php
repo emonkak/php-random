@@ -1,26 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
+/**
+ * @extends AbstractDistribution<int>
+ */
 class BinomialDistribution extends AbstractDistribution
 {
     /**
-     * @var integer
+     * @var int
      */
-    private $n;
+    private $t;
 
     /**
      * @var float
      */
-    private $probability;
+    private $p;
 
-    /**
-     * @param integer $t
-     * @param float $p
-     */
-    public function __construct($t, $p)
+    public function __construct(int $t, float $p)
     {
         assert(0 <= $t);
         assert(0 <= $p && $p <= 1);
@@ -29,18 +30,12 @@ class BinomialDistribution extends AbstractDistribution
         $this->p = $p;
     }
 
-    /**
-     * @return integer
-     */
-    public function getT()
+    public function getT(): int
     {
         return $this->t;
     }
 
-    /**
-     * @return float
-     */
-    public function getP()
+    public function getP(): float
     {
         return $this->p;
     }
@@ -48,7 +43,7 @@ class BinomialDistribution extends AbstractDistribution
     /**
      * {@inheritdoc}
      */
-    public function generate(AbstractEngine $engine)
+    public function generate(EngineInterface $engine)
     {
         if ($this->p == 0) {
             return 0;

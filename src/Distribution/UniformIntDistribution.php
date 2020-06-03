@@ -1,26 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
+/**
+ * @extends AbstractDistribution<int>
+ */
 class UniformIntDistribution extends AbstractDistribution
 {
     /**
-     * @var integer
+     * @var int
      */
     private $min;
 
     /**
-     * @var integer
+     * @var int
      */
     private $max;
 
-    /**
-     * @param integer $min
-     * @param integer $max
-     */
-    public function __construct($min, $max)
+    public function __construct(int $min, int $max)
     {
         assert($min < $max);
 
@@ -28,18 +29,12 @@ class UniformIntDistribution extends AbstractDistribution
         $this->max = $max;
     }
 
-    /**
-     * @return integer
-     */
-    public function getMin()
+    public function getMin(): int
     {
         return $this->min;
     }
 
-    /**
-     * @return integer
-     */
-    public function getMax()
+    public function getMax(): int
     {
         return $this->max;
     }
@@ -47,7 +42,7 @@ class UniformIntDistribution extends AbstractDistribution
     /**
      * {@inheritdoc}
      */
-    public function generate(AbstractEngine $engine)
+    public function generate(EngineInterface $engine)
     {
         return (int) floor($this->min + ($this->max - $this->min + 1.0)
                                       * $engine->nextDouble());

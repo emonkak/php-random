@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
+/**
+ * @extends AbstractDistribution<int>
+ */
 class DiscreteDistribution extends AbstractDistribution
 {
     /**
@@ -17,9 +22,9 @@ class DiscreteDistribution extends AbstractDistribution
     private $uniform;
 
     /**
-     * @param iterable $probabilities
+     * @param float[] $probabilities
      */
-    public function __construct($probabilities)
+    public function __construct(array $probabilities)
     {
         assert(!empty($probabilities));
 
@@ -29,7 +34,6 @@ class DiscreteDistribution extends AbstractDistribution
             $totalProbability += $probability;
         }
 
-        // TODO: Use alias table
         $this->probabilities = $probabilities;
         $this->uniform = new UniformRealDistribution(0, $totalProbability);
     }
@@ -37,7 +41,7 @@ class DiscreteDistribution extends AbstractDistribution
     /**
      * @return float[]
      */
-    public function getProbabilities()
+    public function getProbabilities(): array
     {
         return $this->probabilities;
     }
@@ -45,19 +49,21 @@ class DiscreteDistribution extends AbstractDistribution
     /**
      * {@inheritdoc}
      */
-    public function generate(AbstractEngine $engine)
+    public function generate(EngineInterface $engine)
     {
         $result = $this->uniform->generate($engine);
         $sum = 0;
 
-        foreach ($this->probabilities as $key => $probability) {
+        foreach ($this->probabilities as $index => $probability) {
             $sum += $probability;
 
             if ($probability > 0 && $result <= $sum) {
-                return $key;
+                return $index;
             }
         }
 
-        throw new \LogicException("Can't generate the random number. Confirm the probabilities.");
+        // @codeCoverageIgnoreStart
+        throw new \RuntimeException('Cannot generate the random number. Please confirm the probabilities.');
+        // @codeCoverageIgnoreEnd
     }
 }

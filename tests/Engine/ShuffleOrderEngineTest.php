@@ -1,32 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Engine;
 
+use Emonkak\Random\Engine\EngineInterface;
 use Emonkak\Random\Engine\ShuffleOrderEngine;
+use PHPUnit\Framework\TestCase;
 
-class ShuffleOrderEngineTest extends \PHPUnit_Framework_TestCase
+/**
+ * @covers \Emonkak\Random\Engine\ShuffleOrderEngine
+ */
+class ShuffleOrderEngineTest extends TestCase
 {
+    /**
+     * @var EngineInterface
+     */
     private $engine;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->engine =
-            $this->getMockForAbstractClass('Emonkak\Random\\Engine\\AbstractEngine');
+        $this->engine = $this->getMockForAbstractClass(EngineInterface::class);
     }
 
-    public function testMax()
-    {
-        $this->engine
-            ->expects($this->once())
-            ->method('max')
-            ->willReturn(PHP_INT_MAX);
-
-        $engine = new ShuffleOrderEngine($this->engine, 8);
-
-        $this->assertSame(PHP_INT_MAX, $engine->max());
-    }
-
-    public function testMin()
+    public function testMin(): void
     {
         $this->engine
             ->expects($this->once())
@@ -38,7 +35,19 @@ class ShuffleOrderEngineTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $engine->min());
     }
 
-    public function testNext()
+    public function testMax(): void
+    {
+        $this->engine
+            ->expects($this->once())
+            ->method('max')
+            ->willReturn(PHP_INT_MAX);
+
+        $engine = new ShuffleOrderEngine($this->engine, 8);
+
+        $this->assertSame(PHP_INT_MAX, $engine->max());
+    }
+
+    public function testNext(): void
     {
         $this->engine
             ->expects($this->any())
@@ -56,7 +65,7 @@ class ShuffleOrderEngineTest extends \PHPUnit_Framework_TestCase
         $engine = new ShuffleOrderEngine($this->engine, 4);
 
         for ($i = 0; $i < 4; $i++) {
-            $this->assertContains($engine->next(), array(1, 2, 3, 4));
+            $this->assertContains($engine->next(), [1, 2, 3, 4]);
         }
     }
 }

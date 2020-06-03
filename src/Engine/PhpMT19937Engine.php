@@ -1,21 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Engine;
 
 /**
- * Represents Mersenne Twister algorithm that is consistently broken implementation in PHP 5.2.1+.
+ * Represents the broken Mersenne Twister implementation of old PHP (<7.2)
  *
- * https://github.com/php/php-src/commit/a0724d30817600540946b41e40f4cfc2a0c30f80
+ * https://www.php.net/manual/migration72.incompatible.php#migration72.incompatible.rand-mt_rand-output
  */
 class PhpMT19937Engine extends MT19937Engine
 {
-    /**
-     * @param integer $m
-     * @param integer $u
-     * @param integer $v
-     * @return integer
-     */
-    protected function twist($m, $u, $v)
+    protected function twist(int $m, int $u, int $v): int
     {
         $y = ($u & 0x80000000) | ($v & 0x7fffffff);
         return $m ^ (($y >> 1) & 0x7fffffff) ^ -($u & 0x00000001) & 0x9908b0df;

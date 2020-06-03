@@ -7,7 +7,7 @@ This library provides pseudo-random number generators and probability distributi
 
 ## Requirements
 
-- PHP 5.3 or higher
+- PHP 7.1 or higher
 
 ## Licence
 
@@ -68,13 +68,6 @@ $distribution->generate($engine);
 - `XorShift128Engine`
 
 	The random generator engine according to [Xorshift](http://en.wikipedia.org/wiki/XorShift) 128 bit algorithm.
-
-	```php
-	// If unspecified the seed, it is always specified the default seed value.
-	$engine = new XorShift128Engine(/* $seed */);
-
-	// See also `MT19937Engine`.
-	```
 
 ## Distribution
 

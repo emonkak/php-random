@@ -1,31 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
+/**
+ * @extends AbstractDistribution<float>
+ */
 class GammaDistribution extends AbstractDistribution
 {
     /**
-     * @param float
+     * @var float
      */
     private $alpha;
 
     /**
-     * @param float
+     * @var float
      */
     private $beta;
 
     /**
-     * @param float
+     * @var ExponentialDistribution
+     */
+    private $exponential;
+
+    /**
+     * @var float
      */
     private $p;
 
-    /**
-     * @param float $alpha
-     * @param float $beta
-     */
-    public function __construct($alpha, $beta)
+    public function __construct(float $alpha, float $beta)
     {
         assert($alpha > 0.0);
         assert($beta > 0.0);
@@ -36,31 +42,26 @@ class GammaDistribution extends AbstractDistribution
         $this->p = exp(1.0) / ($alpha + exp(1.0));
     }
 
-    /**
-     * @return float
-     */
-    public function getAlpha()
+    public function getAlpha(): float
     {
         return $this->alpha;
     }
 
-    /**
-     * @return float
-     */
-    public function getBeta()
+    public function getBeta(): float
     {
         return $this->beta;
     }
 
     /**
      * {@inheritdoc}
+     * @psalm-suppress InvalidNullableReturnType
      */
-    public function generate(AbstractEngine $engine)
+    public function generate(EngineInterface $engine)
     {
         if ($this->alpha == 1.0) {
             return $this->exponential->generate($engine) * $this->beta;
         } elseif ($this->alpha > 1.0) {
-            for (;;) {
+            while (true) {
                 $y = tan(M_PI * $engine->nextDouble());
                 $x = sqrt(2.0 * $this->alpha - 1.0) * $y + $this->alpha - 1.0;
 
@@ -79,7 +80,7 @@ class GammaDistribution extends AbstractDistribution
                 return $x * $this->beta;
             }
         } else {  // $this->alpha < 1.0
-            for (;;) {
+            while (true) {
                 $u = $engine->nextDouble();
                 $y = $this->exponential->generate($engine);
 

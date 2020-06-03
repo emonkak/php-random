@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
+/**
+ * @extends AbstractDistribution<float>
+ */
 class PiecewiseConstantDistribution extends AbstractDistribution
 {
     /**
@@ -37,7 +42,7 @@ class PiecewiseConstantDistribution extends AbstractDistribution
     /**
      * @return float[]
      */
-    public function getIntervals()
+    public function getIntervals(): array
     {
         return $this->intervals;
     }
@@ -45,7 +50,7 @@ class PiecewiseConstantDistribution extends AbstractDistribution
     /**
      * @return float[]
      */
-    public function getDensities()
+    public function getDensities(): array
     {
         return $this->densities;
     }
@@ -53,7 +58,7 @@ class PiecewiseConstantDistribution extends AbstractDistribution
     /**
      * {@inheritdoc}
      */
-    public function generate(AbstractEngine $engine)
+    public function generate(EngineInterface $engine)
     {
         $i = $this->discrete->generate($engine);
         $dist = new UniformRealDistribution(

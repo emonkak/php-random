@@ -1,35 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Engine;
 
-abstract class AbstractEngine implements \IteratorAggregate
+abstract class AbstractEngine implements EngineInterface
 {
     const DBL_MANT_DIG = 53;
     const DBL_EPSILON = 2.2204460492503131e-16;
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function __invoke()
+    public function getIterator(): \Traversable
     {
-        return $this->next();
+        while (true) {
+            yield $this->next();
+        }
     }
 
     /**
-     * @see \IteratorAggregate
-     * @return \Iterator
+     * {@inheritdoc}
      */
-    public function getIterator()
-    {
-        return new EngineIterator($this);
-    }
-
-    /**
-     * Advances the internal state by z notches.
-     *
-     * @param integer $z
-     */
-    public function discard($z)
+    public function discard(int $z): void
     {
         while ($z-- > 0) {
             $this->next();
@@ -37,32 +30,9 @@ abstract class AbstractEngine implements \IteratorAggregate
     }
 
     /**
-     * Returns the maximum number that will be generated.
-     *
-     * @return integer
+     * {@inheritdoc}
      */
-    abstract public function max();
-
-    /**
-     * Returns the minimum number that will be generated.
-     *
-     * @return integer
-     */
-    abstract public function min();
-
-    /**
-     * Returns a random number.
-     *
-     * @return integer
-     */
-    abstract public function next();
-
-    /**
-     * Returns a random number that is greater than or equal to 0 and less than 1.
-     *
-     * @return float
-     */
-    public function nextDouble()
+    public function nextDouble(): float
     {
         $max = $this->max();
         $min = $this->min();

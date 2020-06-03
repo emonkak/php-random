@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
+/**
+ * @extends AbstractDistribution<bool>
+ */
 class BernoulliDistribution extends AbstractDistribution
 {
     /**
@@ -11,20 +16,14 @@ class BernoulliDistribution extends AbstractDistribution
      */
     private $p;
 
-    /**
-     * @param float $p
-     */
-    public function __construct($p)
+    public function __construct(float $p)
     {
         assert(0 <= $p && $p <= 1);
 
         $this->p = $p;
     }
 
-    /**
-     * @return float
-     */
-    public function getP()
+    public function getP(): float
     {
         return $this->p;
     }
@@ -32,7 +31,7 @@ class BernoulliDistribution extends AbstractDistribution
     /**
      * {@inheritdoc}
      */
-    public function generate(AbstractEngine $engine)
+    public function generate(EngineInterface $engine)
     {
         if ($this->p == 0) {
             return false;

@@ -1,46 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Distribution;
 
-class AbstractDistributionTest extends AbstractDistributionTestCase
+use Emonkak\Random\Distribution\AbstractDistribution;
+use PHPUnit\Framework\TestCase;
+
+class AbstractDistributionTest extends TestCase
 {
-    public function testIterate()
+    use DistributionTestTrait;
+
+    public function testIterate(): void
     {
-        $engine = $this->createEngineMock(0, 9);
-        $distribution =
-            $this->getMockForAbstractClass('Emonkak\Random\\Distribution\\AbstractDistribution');
+        $engine = $this->createIncrementalEngineMock(0, 9);
+
+        $distribution = $this->getMockForAbstractClass(AbstractDistribution::class);
         $distribution
             ->expects($this->any())
             ->method('generate')
             ->with($this->identicalTo($engine))
             ->willReturn(1234);
 
-        $it = $distribution->iterate($engine);
+        $iterator = $distribution->iterate($engine);
 
-        $this->assertInstanceOf('Iterator', $it);
-
-        $it->rewind();
+        $iterator->rewind();
 
         for ($i = 0; $i < 10; $i++) {
-            $this->assertTrue($it->valid());
-            $this->assertSame(1234, $it->current());
-            $this->assertSame($i, $it->key());
-
-            $it->next();
+            $this->assertTrue($iterator->valid());
+            $this->assertSame(1234, $iterator->current());
+            $this->assertSame($i, $iterator->key());
+            $iterator->next();
         }
-    }
-
-    public function testInvoke()
-    {
-        $engine = $this->createEngineMock(0, 9);
-        $distribution =
-            $this->getMockForAbstractClass('Emonkak\Random\\Distribution\\AbstractDistribution');
-        $distribution
-            ->expects($this->any())
-            ->method('generate')
-            ->with($this->identicalTo($engine))
-            ->willReturn(1234);
-
-        $this->assertSame(1234, $distribution($engine));
     }
 }

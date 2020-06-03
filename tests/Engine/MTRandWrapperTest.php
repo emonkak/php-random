@@ -1,26 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Engine;
 
 use Emonkak\Random\Engine\MTRandWrapper;
+use PHPUnit\Framework\TestCase;
 
-class MTRandWrapperTest extends \PHPUnit_Framework_TestCase
+/**
+ * @covers \Emonkak\Random\Engine\MTRandWrapper
+ */
+class MTRandWrapperTest extends TestCase
 {
-    public function testMax()
-    {
-        $engine = new MTRandWrapper();
-
-        $this->assertSame(mt_getrandmax(), $engine->max());
-    }
-
-    public function testMin()
+    public function testMin(): void
     {
         $engine = new MTRandWrapper();
 
         $this->assertSame(0, $engine->min());
     }
 
-    public function testNext()
+    public function testMax(): void
+    {
+        $engine = new MTRandWrapper();
+
+        $this->assertSame(mt_getrandmax(), $engine->max());
+    }
+
+    public function testNext(): void
     {
         $engine = new MTRandWrapper();
 
@@ -32,7 +38,7 @@ class MTRandWrapperTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testGetIterator()
+    public function testGetIterator(): void
     {
         mt_srand(1234);
 
