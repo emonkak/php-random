@@ -1,16 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Engine;
 
 use Emonkak\Random\Engine\PhpMT19937Engine;
+use PHPUnit\Framework\TestCase;
 
-class PhpMT19937EngineTest extends \PHPUnit_Framework_TestCase
+/**
+ * @covers \Emonkak\Random\Engine\PhpMT19937Engine
+ */
+class PhpMT19937EngineTest extends TestCase
 {
-    public function testNext()
+    public function testNext(): void
     {
         $engine = new PhpMT19937Engine(12345678);
 
-        $expectedResults = array(
+        $expectedResults = [
             1614640687,
             1711027313,
             857485497,
@@ -27,7 +33,7 @@ class PhpMT19937EngineTest extends \PHPUnit_Framework_TestCase
             1923803667,
             676334965,
             853386222,
-        );
+        ];
 
         foreach ($expectedResults as $expectedResult) {
             $this->assertSame($expectedResult, $engine->next());

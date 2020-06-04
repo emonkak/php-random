@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Distribution;
 
 use Emonkak\Random\Distribution\LogNormalDistribution;
+use PHPUnit\Framework\TestCase;
 
-class LogNormalDistributionTest extends AbstractDistributionTestCase
+class LogNormalDistributionTest extends TestCase
 {
-    public function testGenerate()
+    use DistributionTestTrait;
+
+    public function testGenerate(): void
     {
-        $engine = $this->createEngineMock(0, 99);
+        $engine = $this->createIncrementalEngineMock(0, 99);
         $distribution = new LogNormalDistribution(0, 1);
 
-        for ($i = 100; $i--;) {
+        for ($i = 0; $i < 100; $i++) {
             $n = $distribution->generate($engine);
 
             $this->assertInternalType('float', $n);

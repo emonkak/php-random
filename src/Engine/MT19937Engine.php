@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Engine;
 
 /**
@@ -11,41 +13,25 @@ class MT19937Engine extends AbstractEngine
     const M = 397;
 
     /**
-     * @var integer
-     */
-    private $seed;
-
-    /**
      * @var \SplFixedArray
      */
     private $state;
 
     /**
-     * @var integer
+     * @var int
      */
     private $remains = 0;
 
-    /**
-     * @param integer The initial seed
-     */
-    public function __construct($seed)
+    public function __construct(int $seed)
     {
         $this->state = new \SplFixedArray(self::N + 1);
-        $this->seed($seed);
+        $this->setSeed($seed);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function max()
-    {
-        return 0x7fffffff;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function min()
+    public function min(): int
     {
         return 0;
     }
@@ -53,7 +39,15 @@ class MT19937Engine extends AbstractEngine
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function max(): int
+    {
+        return 0x7fffffff;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next(): int
     {
         if ($this->remains === 0) {
             $this->nextSeed();
@@ -68,22 +62,13 @@ class MT19937Engine extends AbstractEngine
         return $s1;
     }
 
-    /**
-     * @param integer $m
-     * @param integer $u
-     * @param integer $v
-     * @return integer
-     */
-    protected function twist($m, $u, $v)
+    protected function twist(int $m, int $u, int $v): int
     {
         $y = ($u & 0x80000000) | ($v & 0x7fffffff);
         return $m ^ (($y >> 1) & 0x7fffffff) ^ -($v & 0x00000001) & 0x9908b0df;
     }
 
-    /**
-     * @param integer $seed
-     */
-    private function seed($seed)
+    private function setSeed(int $seed): void
     {
         $this->state[0] = $seed & 0xffffffff;
 
@@ -101,10 +86,7 @@ class MT19937Engine extends AbstractEngine
         }
     }
 
-    /**
-     * @return void
-     */
-    private function nextSeed()
+    private function nextSeed(): void
     {
         for ($i = 0, $l = self::N - self::M; $i < $l; $i++) {
             $this->state[$i] = $this->twist(
@@ -133,14 +115,10 @@ class MT19937Engine extends AbstractEngine
         $this->state->rewind();
     }
 
-    /**
-     * @param integer $x
-     * @return integer
-     */
-    private function tempering($x)
+    private function tempering(int $x): int
     {
         $x ^= ($x >> 11) & 0x7fffffff;
-        $x ^= ($x <<  7) & 0x9d2c5680;
+        $x ^= ($x << 7) & 0x9d2c5680;
         $x ^= ($x << 15) & 0xefc60000;
         $x ^= ($x >> 18) & 0x7fffffff;
         return ($x >> 1) & 0x7fffffff;

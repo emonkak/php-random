@@ -1,37 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Distribution;
 
 use Emonkak\Random\Distribution\PiecewiseConstantDistribution;
+use PHPUnit\Framework\TestCase;
 
-class PiecewiseConstantDistributionTest extends AbstractDistributionTestCase
+class PiecewiseConstantDistributionTest extends TestCase
 {
-    public function testGetIntervals()
+    use DistributionTestTrait;
+
+    public function testConstructor(): void
     {
-        $intervals = array(0.0, 1.0, 10.0);
-        $densities = array(1.0, 0.0);
+        $intervals = [0.0, 1.0, 10.0];
+        $densities = [1.0, 0.0];
         $distribution = new PiecewiseConstantDistribution($intervals, $densities);
 
         $this->assertSame($intervals, $distribution->getIntervals());
-    }
-
-    public function testGetDensities()
-    {
-        $intervals = array(0.0, 1.0, 10.0);
-        $densities = array(1.0, 0.0);
-        $distribution = new PiecewiseConstantDistribution($intervals, $densities);
-
         $this->assertSame($densities, $distribution->getDensities());
     }
 
-    public function testGenerate()
+    public function testGenerate(): void
     {
-        $intervals = array(0.0, 1.0, 10.0);
-        $densities = array(1.0, 0.0);
-        $engine = $this->createEngineMock(0, 999);
+        $intervals = [0.0, 1.0, 10.0];
+        $densities = [1.0, 0.0];
+        $engine = $this->createIncrementalEngineMock(0, 999);
         $distribution = new PiecewiseConstantDistribution($intervals, $densities);
 
-        for ($i = 500; $i--;) {
+        for ($i = 0; $i < 500; $i++) {
             $n = $distribution->generate($engine);
 
             $this->assertInternalType('float', $n);
@@ -39,8 +36,8 @@ class PiecewiseConstantDistributionTest extends AbstractDistributionTestCase
             $this->assertLessThanOrEqual(1.0, $n);
         }
 
-        $intervals = array(0.0, 1.0, 10.0);
-        $densities = array(0.0, 1.0);
+        $intervals = [0.0, 1.0, 10.0];
+        $densities = [0.0, 1.0];
         $distribution = new PiecewiseConstantDistribution($intervals, $densities);
 
         for ($i = 500; $i--;) {

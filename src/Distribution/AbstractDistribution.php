@@ -1,32 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
-abstract class AbstractDistribution
+/**
+ * @template T
+ * @implements DistributionInterface<T>
+ */
+abstract class AbstractDistribution implements DistributionInterface
 {
     /**
-     * @param AbstractEngine $engine
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function __invoke(AbstractEngine $engine)
+    public function iterate(EngineInterface $engine): \Iterator
     {
-        return $this->generate($engine);
-    }
-
-    /**
-     * @param AbstractEngine $engine
-     * @return mixed
-     */
-    abstract public function generate(AbstractEngine $engine);
-
-    /**
-     * @param AbstractEngine $engine
-     * @return \Iterator
-     */
-    public function iterate(AbstractEngine $engine)
-    {
-        return new DistributionIterator($this, $engine);
+        while (true) {
+            yield $this->generate($engine);
+        }
     }
 }

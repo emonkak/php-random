@@ -1,33 +1,39 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Engine;
 
 use Emonkak\Random\Engine\XorShift128Engine;
+use PHPUnit\Framework\TestCase;
 
-class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
+/**
+ * @covers \Emonkak\Random\Engine\XorShift128Engine
+ */
+class XorShiftEngineTest extends TestCase
 {
     const SUPPLY_OF_SEED = 8;
 
     const NUMBER_OF_TRIALS = 128;
 
-    public function testMax()
-    {
-        $engine = new XorShift128Engine(123456789, 362436069, 521288629, 88675123);
-
-        $this->assertSame(0x7fffffff, $engine->max());
-    }
-
-    public function testMin()
+    public function testMin(): void
     {
         $engine = new XorShift128Engine(123456789, 362436069, 521288629, 88675123);
 
         $this->assertSame(0, $engine->min());
     }
 
+    public function testMax(): void
+    {
+        $engine = new XorShift128Engine(123456789, 362436069, 521288629, 88675123);
+
+        $this->assertSame(0x7fffffff, $engine->max());
+    }
+
     /**
-     * @dataProvider seedProvider
+     * @dataProvider providerNext
      */
-    public function testNext($seed)
+    public function testNext(int $seed): void
     {
         $engine = XorShift128Engine::from($seed);
 
@@ -40,9 +46,9 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @dataProvider seedProvider
+     * @dataProvider providerNext
      */
-    public function testNextDouble($seed)
+    public function testNextDouble(int $seed): void
     {
         $engine = XorShift128Engine::from($seed);
 
@@ -54,10 +60,10 @@ class XorShiftEngineTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function seedProvider()
+    public function providerNext(): array
     {
         return array_map(
-            function($xs) { return array($xs); },
+            function($xs) { return [$xs]; },
             range(0, PHP_INT_MAX, (int) (PHP_INT_MAX / self::SUPPLY_OF_SEED))
         );
     }

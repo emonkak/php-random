@@ -1,35 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Distribution;
 
 use Emonkak\Random\Distribution\BernoulliDistribution;
+use PHPUnit\Framework\TestCase;
 
-class BernoulliDistributionTest extends AbstractDistributionTestCase
+class BernoulliDistributionTest extends TestCase
 {
-    public function testGetP()
+    use DistributionTestTrait;
+
+    public function testConstructor(): void
     {
         $distribution = new BernoulliDistribution(1.0);
 
         $this->assertSame(1.0, $distribution->getP());
     }
 
-    public function testGenerateItAlwaysTrue()
+    public function testGenerateReturnsTrue(): void
     {
-        $engine = $this->createEngineMock(0, 99);
+        $engine = $this->createIncrementalEngineMock(0, 99);
         $distribution = new BernoulliDistribution(1.0);
 
-        for ($i = 100; $i--;) {
-            $this->assertTrue($distribution->generate($engine), $i);
+        for ($i = 0; $i < 100; $i++) {
+            $this->assertTrue($distribution->generate($engine), $i . 'th');
         }
     }
 
-    public function testGenerateItAlwaysFalse()
+    public function testGenerateReturnsFalse(): void
     {
-        $engine = $this->createEngineMock(0, 99);
+        $engine = $this->createIncrementalEngineMock(0, 99);
         $distribution = new BernoulliDistribution(0.0);
 
-        for ($i = 100; $i--;) {
-            $this->assertFalse($distribution->generate($engine), $i);
+        for ($i = 0; $i < 100; $i++) {
+            $this->assertFalse($distribution->generate($engine), $i . 'th');
         }
     }
 }

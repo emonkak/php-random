@@ -1,30 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Engine;
 
 use Emonkak\Random\Engine\MT19937Engine;
+use PHPUnit\Framework\TestCase;
 
-class MT19937EngineTest extends \PHPUnit_Framework_TestCase
+/**
+ * @covers \Emonkak\Random\Engine\MT19937Engine
+ */
+class MT19937EngineTest extends TestCase
 {
-    public function testMax()
-    {
-        $engine = new MT19937Engine(12345678);
-
-        $this->assertSame(mt_getrandmax(), $engine->max());
-    }
-
-    public function testMin()
+    public function testMin(): void
     {
         $engine = new MT19937Engine(12345678);
 
         $this->assertSame(0, $engine->min());
     }
 
-    public function testNext()
+    public function testMax(): void
     {
         $engine = new MT19937Engine(12345678);
 
-        $expectedResults = array(
+        $this->assertSame(mt_getrandmax(), $engine->max());
+    }
+
+    public function testNext(): void
+    {
+        $engine = new MT19937Engine(12345678);
+
+        $expectedResults = [
             527860569,
             1711027313,
             1280820687,
@@ -41,7 +47,7 @@ class MT19937EngineTest extends \PHPUnit_Framework_TestCase
             1923803667,
             1461450755,
             1301698200,
-        );
+        ];
 
         foreach ($expectedResults as $expectedResult) {
             $this->assertSame($expectedResult, $engine->next());

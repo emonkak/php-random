@@ -1,12 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Engine;
 
 use Emonkak\Random\Engine\KnuthBEngine;
+use PHPUnit\Framework\TestCase;
 
-class KnuthBEngineTest extends \PHPUnit_Framework_TestCase
+/**
+ * @covers \Emonkak\Random\Engine\KnuthBEngine
+ */
+class KnuthBEngineTest extends TestCase
 {
-    public function testNext()
+    public function testNext(): void
     {
         $engine = new KnuthBEngine();
         $engine->discard(9999);

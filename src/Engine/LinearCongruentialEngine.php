@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Engine;
 
 class LinearCongruentialEngine extends AbstractEngine
@@ -7,32 +9,26 @@ class LinearCongruentialEngine extends AbstractEngine
     const DEFAULT_SEED = 1;
 
     /**
-     * @var integer
+     * @var int
      */
     private $a;
 
     /**
-     * @var integer
+     * @var int
      */
     private $c;
 
     /**
-     * @var integer
+     * @var int
      */
     private $m;
 
     /**
-     * @var integer
+     * @var int
      */
     private $x;
 
-    /**
-     * @param integer $a
-     * @param integer $c
-     * @param integer $m
-     * @param integer $x The seed number
-     */
-    public function __construct($a, $c, $m, $x)
+    public function __construct(int $a, int $c, int $m, int $x)
     {
         $this->a = $a;
         $this->c = $c;
@@ -43,15 +39,7 @@ class LinearCongruentialEngine extends AbstractEngine
     /**
      * {@inheritdoc}
      */
-    public function max()
-    {
-        return $this->m - 1;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function min()
+    public function min(): int
     {
         return $this->c == 0 ? 1 : 0;
     }
@@ -59,7 +47,15 @@ class LinearCongruentialEngine extends AbstractEngine
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function max(): int
+    {
+        return $this->m - 1;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next(): int
     {
         return $this->x = (int) fmod($this->a * $this->x + $this->c, $this->m);
     }

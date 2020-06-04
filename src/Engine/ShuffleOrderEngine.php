@@ -1,34 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Engine;
 
 class ShuffleOrderEngine extends AbstractEngine
 {
     /**
-     * @var AbstractEngine
+     * @var EngineInterface
      */
     private $engine;
 
     /**
-     * @var integer
+     * @var int
      */
     private $k;
 
     /**
-     * @var SplFixedArray
+     * @var \SplFixedArray
      */
     private $v;
 
     /**
-     * @var integer
+     * @var int
      */
     private $y;
 
-    /**
-     * @param AbstractEngine $engine
-     * @param integer $k
-     */
-    public function __construct(AbstractEngine $engine, $k)
+    public function __construct(EngineInterface $engine, int $k)
     {
         $this->engine = $engine;
         $this->k = $k;
@@ -44,15 +42,7 @@ class ShuffleOrderEngine extends AbstractEngine
     /**
      * {@inheritdoc}
      */
-    public function max()
-    {
-        return $this->engine->max();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function min()
+    public function min(): int
     {
         return $this->engine->min();
     }
@@ -60,7 +50,15 @@ class ShuffleOrderEngine extends AbstractEngine
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function max(): int
+    {
+        return $this->engine->max();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function next(): int
     {
         $min = $this->engine->min();
         $max = $this->engine->max();

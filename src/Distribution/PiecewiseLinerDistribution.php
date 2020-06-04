@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
+/**
+ * @extends AbstractDistribution<float>
+ */
 class PiecewiseLinerDistribution extends AbstractDistribution
 {
     /**
@@ -29,13 +34,13 @@ class PiecewiseLinerDistribution extends AbstractDistribution
     {
         assert(count($intervals) === count($densities));
 
-        $probabilities = array();
+        $probabilities = [];
 
         for ($i = 0, $l = count($intervals) - 1; $i < $l; $i++) {
             $width = $intervals[$i + 1] - $intervals[$i];
             $p1 = $densities[$i];
             $p2 = $densities[$i + 1];
-            $probabilities[] = min($p1,  $p2) * $width;
+            $probabilities[] = min($p1, $p2) * $width;
             $probabilities[] = abs($p1 - $p2) * $width / 2;
         }
 
@@ -47,7 +52,7 @@ class PiecewiseLinerDistribution extends AbstractDistribution
     /**
      * @return float[]
      */
-    public function getIntervals()
+    public function getIntervals(): array
     {
         return $this->intervals;
     }
@@ -55,7 +60,7 @@ class PiecewiseLinerDistribution extends AbstractDistribution
     /**
      * @return float[]
      */
-    public function getDensities()
+    public function getDensities(): array
     {
         return $this->densities;
     }
@@ -63,7 +68,7 @@ class PiecewiseLinerDistribution extends AbstractDistribution
     /**
      * {@inheritdoc}
      */
-    public function generate(AbstractEngine $engine)
+    public function generate(EngineInterface $engine)
     {
         $i = $this->discrete->generate($engine);
         $isInRectangle = ($i % 2 === 0);

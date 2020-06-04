@@ -1,31 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Distribution;
 
 use Emonkak\Random\Distribution\GammaDistribution;
+use PHPUnit\Framework\TestCase;
 
-class GammaDistributionTest extends AbstractDistributionTestCase
+class GammaDistributionTest extends TestCase
 {
-    public function testGetAlpha()
+    use DistributionTestTrait;
+
+    public function testConstructor(): void
     {
         $distribution = new GammaDistribution(0.75, 0.25);
 
         $this->assertSame(0.75, $distribution->getAlpha());
-    }
-
-    public function testGetBeta()
-    {
-        $distribution = new GammaDistribution(0.75, 0.25);
-
         $this->assertSame(0.25, $distribution->getBeta());
     }
 
-    public function testGenerate()
+    public function testGenerate(): void
     {
-        $engine = $this->createEngineMock(0, 74);
+        $engine = $this->createIncrementalEngineMock(0, 74);
         $distribution = new GammaDistribution(1.0, 1.0);
 
-        for ($i = 25; $i--;) {
+        for ($i = 0; $i < 25; $i++) {
             $n = $distribution->generate($engine);
 
             $this->assertInternalType('float', $n);

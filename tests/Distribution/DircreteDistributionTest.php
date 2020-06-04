@@ -1,38 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Tests\Distribution;
 
 use Emonkak\Random\Distribution\DiscreteDistribution;
+use PHPUnit\Framework\TestCase;
 
-class DircreteDistributionTest extends AbstractDistributionTestCase
+class DircreteDistributionTest extends TestCase
 {
-    public function testGetProbabilities()
+    use DistributionTestTrait;
+
+    public function testConstructor(): void
     {
-        $probabilities = array(
+        $probabilities = [
             1 => 25,
             2 => 25,
             3 => 25,
             4 => 25,
-        );
+        ];
 
         $distribution = new DiscreteDistribution($probabilities);
 
         $this->assertSame($probabilities, $distribution->getProbabilities());
     }
 
-    public function testGenerateEqually()
+    public function testGenerateEqually(): void
     {
-        $probabilities = array(
+        $probabilities = [
             1 => 25,
             2 => 25,
             3 => 25,
             4 => 25,
-        );
+        ];
 
-        $engine = $this->createEngineMock(0, 99);
+        $engine = $this->createIncrementalEngineMock(0, 99);
         $distribution = new DiscreteDistribution($probabilities);
 
-        $seenIndexes = array();
+        $seenIndexes = [];
         $avaliableKeys = array_keys($probabilities);
 
         for ($i = 0; $i < 100; $i++) {
@@ -44,15 +49,15 @@ class DircreteDistributionTest extends AbstractDistributionTestCase
         $this->assertCount(count($probabilities), $seenIndexes);
     }
 
-    public function testGenerateInequally()
+    public function testGenerateInequally(): void
     {
-        $probabilities = array(
+        $probabilities = [
             0 => 0,
             1 => 100,
             2 => 100,
-        );
+        ];
 
-        $engine = $this->createBiasedEngineMock(0, 99, 0);
+        $engine = $this->createFixedEngineMock(0, 99, 0);
         $distribution = new DiscreteDistribution($probabilities);
 
         for ($i = 0; $i < 100; $i++) {

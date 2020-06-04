@@ -1,9 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Emonkak\Random\Distribution;
 
-use Emonkak\Random\Engine\AbstractEngine;
+use Emonkak\Random\Engine\EngineInterface;
 
+/**
+ * @extends AbstractDistribution<float>
+ */
 class NormalDistribution extends AbstractDistribution
 {
     /**
@@ -16,11 +21,7 @@ class NormalDistribution extends AbstractDistribution
      */
     private $sigma;
 
-    /**
-     * @param float $mean
-     * @param float $sigma
-     */
-    public function __construct($mean, $sigma)
+    public function __construct(float $mean, float $sigma)
     {
         assert($sigma >= 0);
 
@@ -28,18 +29,12 @@ class NormalDistribution extends AbstractDistribution
         $this->sigma = $sigma;
     }
 
-    /**
-     * @return float
-     */
-    public function getMean()
+    public function getMean(): float
     {
         return $this->mean;
     }
 
-    /**
-     * @return float
-     */
-    public function getSigma()
+    public function getSigma(): float
     {
         return $this->sigma;
     }
@@ -47,7 +42,7 @@ class NormalDistribution extends AbstractDistribution
     /**
      * {@inheritdoc}
      */
-    public function generate(AbstractEngine $engine)
+    public function generate(EngineInterface $engine)
     {
         $r1 = $engine->nextDouble();
         $r2 = $engine->nextDouble();
